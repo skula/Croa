@@ -34,11 +34,11 @@ public class Drawer {
 	}
 
 	public void draw(Canvas c) {
-		int x0 = 0;
+		int x0 = 280;
 		int y0 = 0;
 
-		int dx = 100;
-		int dy = 100;
+		int dx = Cnst.TILE_SIZE;
+		int dy = Cnst.TILE_SIZE;
 
 		for (int i = 0; i < Cnst.ROW_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
@@ -57,7 +57,7 @@ public class Drawer {
 					id = R.drawable.pike;
 					break;
 				case Cnst.TILE_TYPE_WOODLOG:
-					id = R.drawable.waterlilly;
+					id = R.drawable.woodlog;
 					break;
 				case Cnst.TILE_TYPE_REED:
 					id = R.drawable.reed;
@@ -86,7 +86,7 @@ public class Drawer {
 					break;
 				}				
 
-				c.drawBitmap(lib.get(id), new Rect(0, 0, 100, 100), new Rect(dx*j, dy*i, dx*j+100, dy*i+100), paint);
+				c.drawBitmap(lib.get(id), new Rect(0, 0, 100, 100), new Rect(x0+dx*j, y0+dy*i, x0+dx*j+Cnst.TILE_SIZE, y0+dy*i+Cnst.TILE_SIZE), paint);
 			}
 		}
 	}

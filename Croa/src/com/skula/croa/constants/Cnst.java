@@ -4,6 +4,7 @@ public class Cnst {
 	// damier
 	public static final int COLUMNS_COUNT = 8;
 	public static final int ROW_COUNT = 8;
+	public static final int TILE_SIZE = 90;
 
 	public static final int FROGS_COUNT = 6;
 

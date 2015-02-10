@@ -31,6 +31,7 @@ public class PictureLibrary{
 		this.map.put(R.drawable.pike, 		BitmapFactory.decodeResource(res, R.drawable.pike));
 		this.map.put(R.drawable.reed, 		BitmapFactory.decodeResource(res, R.drawable.reed));
 		this.map.put(R.drawable.waterlilly, 		BitmapFactory.decodeResource(res, R.drawable.waterlilly));
+		this.map.put(R.drawable.woodlog, 		BitmapFactory.decodeResource(res, R.drawable.woodlog));
 	}
 		
 	public Bitmap get(int id){
