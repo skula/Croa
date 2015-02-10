@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.skula.croa.R;
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.constants.PictureLibrary;
 import com.skula.croa.models.Tile;
@@ -44,48 +45,48 @@ public class Drawer {
 				int id = 0;
 				switch (tiles[j][i].getType()) {
 				case Cnst.TILE_TYPE_MOSQUITO:
-
+					id = R.drawable.mosquito;
 					break;
 				case Cnst.TILE_TYPE_MUD:
-
+					id = R.drawable.mud;
 					break;
 				case Cnst.TILE_TYPE_WATERLILY:
-
+					id = R.drawable.waterlilly;
 					break;
 				case Cnst.TILE_TYPE_PIKE:
-
+					id = R.drawable.pike;
 					break;
 				case Cnst.TILE_TYPE_WOODLOG:
-
+					id = R.drawable.waterlilly;
 					break;
 				case Cnst.TILE_TYPE_REED:
-
+					id = R.drawable.reed;
 					break;
 				case Cnst.TILE_TYPE_MALE:
 					switch (tiles[j][i].getMaleId()) {
 					case Cnst.MALE_GREEN:
-
+						id = R.drawable.male_green;
 						break;
 					case Cnst.MALE_YELLOW:
-
+						id = R.drawable.male_yellow;
 						break;
 					case Cnst.MALE_RED:
-
+						id = R.drawable.male_red;
 						break;
 					case Cnst.MALE_BLUE:
-
+						id = R.drawable.male_blue;
 						break;
 					case Cnst.MALE_PINK:
-
+						id = R.drawable.male_pink;
 						break;
 					case Cnst.MALE_PURPLE:
-
+						id = R.drawable.male_purple;
 						break;
 					}
 					break;
 				}				
 
-				c.drawBitmap(lib.get(id), new Rect(0, 0, 100, 100), new Rect(x0, y0, x0 + j, y0 + 98), paint);
+				c.drawBitmap(lib.get(id), new Rect(0, 0, 100, 100), new Rect(dx*j, dy*i, dx*j+100, dy*i+100), paint);
 			}
 		}
 	}
