@@ -100,8 +100,8 @@ public class Tile {
 
 		// Brochet
 		for (int i = 0; i < 2; i++) {
-			list.add(new Tile(Cnst.TILE_TYPE_MUD, Cnst.TILE_BACK_DEPTH_2, 0, 1));
-			list.add(new Tile(Cnst.TILE_TYPE_MUD, Cnst.TILE_BACK_DEPTH_3, 0, 1));
+			list.add(new Tile(Cnst.TILE_TYPE_PIKE, Cnst.TILE_BACK_DEPTH_2, 0, 1));
+			list.add(new Tile(Cnst.TILE_TYPE_PIKE, Cnst.TILE_BACK_DEPTH_3, 0, 1));
 		}
 
 		// Rondin de bois
