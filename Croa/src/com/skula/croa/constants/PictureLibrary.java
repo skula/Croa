@@ -29,7 +29,7 @@ public class PictureLibrary{
 		this.map.put(R.drawable.mosquito, 		BitmapFactory.decodeResource(res, R.drawable.mosquito));
 		this.map.put(R.drawable.mud, 		BitmapFactory.decodeResource(res, R.drawable.mud));
 		this.map.put(R.drawable.pike, 		BitmapFactory.decodeResource(res, R.drawable.pike));
-		this.map.put(R.drawable.reek, 		BitmapFactory.decodeResource(res, R.drawable.reek));
+		this.map.put(R.drawable.reed, 		BitmapFactory.decodeResource(res, R.drawable.reed));
 		this.map.put(R.drawable.waterlilly, 		BitmapFactory.decodeResource(res, R.drawable.waterlilly));
 	}
 		

@@ -12,7 +12,7 @@ public class BoardView extends View {
 
 	public BoardView(Context context, int nPlayers) {
 		super(context);
-		this.drawer = new Drawer();
+		this.drawer = new Drawer(context.getResources());
 	}
 
 	@Override
