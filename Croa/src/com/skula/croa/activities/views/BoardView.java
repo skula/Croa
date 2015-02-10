@@ -5,10 +5,14 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.skula.croa.services.Drawer;
+
 public class BoardView extends View {
+	private Drawer drawer;
 
 	public BoardView(Context context, int nPlayers) {
 		super(context);
+		this.drawer = new Drawer();
 	}
 
 	@Override
@@ -24,7 +28,7 @@ public class BoardView extends View {
 
 			break;
 		case MotionEvent.ACTION_UP:
-		
+
 			break;
 		}
 		return true;
@@ -32,5 +36,6 @@ public class BoardView extends View {
 
 	@Override
 	public void draw(Canvas canvas) {
+		drawer.draw(canvas);
 	}
 }

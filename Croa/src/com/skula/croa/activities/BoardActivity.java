@@ -11,9 +11,9 @@ public class BoardActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//Bundle bundle = getIntent().getExtras();
-		//String nPlayers = bundle.getString(Cnst.BUNDLE_NAME_PLAYERS_COUNT);
-		
+		// Bundle bundle = getIntent().getExtras();
+		// String nPlayers = bundle.getString(Cnst.BUNDLE_NAME_PLAYERS_COUNT);
+
 		setContentView(new BoardView(this, 2));
 	}
 
