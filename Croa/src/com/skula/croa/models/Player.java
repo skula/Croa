@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skula.croa.constants.Cnst;
+import com.skula.croa.enums.Male;
 
 public class Player {
 	private int id;
-	private List<Frog> frogs;
-	private QueenFrog queen;
-	private List<Integer> malesLeft;
-	private int frogsLeft;
+	private List<Frog> maids;
+	private Frog queen;
+	private List<Male> malesLeft;
+	private int maidsLeft;
+	private boolean dead;
 
 	public static void main(String[] args) {
 
@@ -18,28 +20,29 @@ public class Player {
 
 	public Player(int id) {
 		this.id = id;
-		this.malesLeft = new ArrayList<Integer>();
-		this.malesLeft.add(Cnst.MALE_GREEN);
-		this.malesLeft.add(Cnst.MALE_YELLOW);
-		this.malesLeft.add(Cnst.MALE_RED);
-		this.malesLeft.add(Cnst.MALE_BLUE);
-		this.malesLeft.add(Cnst.MALE_PINK);
-		this.malesLeft.add(Cnst.MALE_PURPLE);
-		this.frogs = new ArrayList<Frog>();
-		this.frogsLeft = Cnst.FROGS_COUNT;
+		this.malesLeft = new ArrayList<Male>();
+		this.malesLeft.add(Male.GREEN);
+		this.malesLeft.add(Male.YELLOW);
+		this.malesLeft.add(Male.RED);
+		this.malesLeft.add(Male.BLUE);
+		this.malesLeft.add(Male.PINK);
+		this.malesLeft.add(Male.PURPLE);
+		this.maids = new ArrayList<Frog>();
+		this.maidsLeft = Cnst.FROGS_COUNT;
+		this.dead = false;
 	}
 
-	public void addFrog(int x, int y) {
-		frogs.add(new Frog(x, y));
-		frogsLeft--;
+	public void addMaid(int x, int y) {
+		maids.add(new Frog(x, y));
+		maidsLeft--;
 	}
 
 	public void setQueen(int x, int y) {
-		queen = new QueenFrog(x, y);
+		queen = new Frog(x, y);
 	}
 
-	public boolean hasFrog(int x, int y) {
-		for (Frog f : frogs) {
+	public boolean hasMaid(int x, int y) {
+		for (Frog f : maids) {
 			if (f.getxPos() == x && f.getyPos() == y) {
 				return true;
 			}
@@ -53,7 +56,7 @@ public class Player {
 		}
 
 		int res = 0;
-		for (Frog f : frogs) {
+		for (Frog f : maids) {
 			if (f.getxPos() == x && f.getyPos() == y) {
 				res++;
 			}
@@ -66,7 +69,7 @@ public class Player {
 	}
 
 	public int getDeadFrogs() {
-		return Cnst.FROGS_COUNT - frogsLeft - frogs.size();
+		return Cnst.FROGS_COUNT - maidsLeft - maids.size();
 	}
 
 	public int getId() {
@@ -77,35 +80,53 @@ public class Player {
 		this.id = id;
 	}
 
-	public List<Frog> getFrogs() {
-		return frogs;
+	public List<Frog> getMaids() {
+		return maids;
 	}
 
-	public void setFrogs(List<Frog> frogs) {
-		this.frogs = frogs;
+	public Frog getMaid(int x, int y) {
+		for (Frog f : maids) {
+			if (f.getxPos() == x && f.getyPos() == y) {
+				return f;
+			}
+		}
+		return null;
 	}
 
-	public QueenFrog getQueen() {
+	public void setMaids(List<Frog> maids) {
+		this.maids = maids;
+	}
+
+	public Frog getQueen() {
 		return queen;
 	}
 
-	public void setQueen(QueenFrog queen) {
+	public void setQueen(Frog queen) {
 		this.queen = queen;
 	}
 
-	public List<Integer> getMalesLeft() {
+	public List<Male> getMalesLeft() {
 		return malesLeft;
 	}
 
-	public void setMalesLeft(List<Integer> malesLeft) {
+	public void setMalesLeft(List<Male> malesLeft) {
 		this.malesLeft = malesLeft;
 	}
 
-	public int getFrogsLeft() {
-		return frogsLeft;
+	public int getMaidsLeft() {
+		return maidsLeft;
 	}
 
-	public void setFrogsLeft(int frogsLeft) {
-		this.frogsLeft = frogsLeft;
+	public boolean isDead() {
+		return dead;
 	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
+	public void setMaidsLeft(int maidsLeft) {
+		this.maidsLeft = maidsLeft;
+	}
+
 }

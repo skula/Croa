@@ -5,7 +5,6 @@ public class TileOccupants {
 	
 	private int frog1Id;
 	private int frog2Id;
-	
 	private boolean frog1queen;
 	private boolean frog2queen;
 	

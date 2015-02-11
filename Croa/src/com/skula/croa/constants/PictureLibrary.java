@@ -34,7 +34,7 @@ public class PictureLibrary{
 		this.map.put(R.drawable.woodlog, 		BitmapFactory.decodeResource(res, R.drawable.woodlog));
 		
 		this.map.put(R.drawable.frog_blue, 		BitmapFactory.decodeResource(res, R.drawable.frog_blue));
-		this.map.put(R.drawable.frog_green, 		BitmapFactory.decodeResource(res, R.drawable.frog_green));
+		this.map.put(R.drawable.frog_pink, 		BitmapFactory.decodeResource(res, R.drawable.frog_pink));
 		this.map.put(R.drawable.frog_yellow, 		BitmapFactory.decodeResource(res, R.drawable.frog_yellow));
 		this.map.put(R.drawable.frog_red, 		BitmapFactory.decodeResource(res, R.drawable.frog_red));
 	}
