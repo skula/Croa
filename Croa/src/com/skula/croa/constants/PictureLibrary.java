@@ -33,10 +33,15 @@ public class PictureLibrary{
 		this.map.put(R.drawable.waterlilly, 		BitmapFactory.decodeResource(res, R.drawable.waterlilly));
 		this.map.put(R.drawable.woodlog, 		BitmapFactory.decodeResource(res, R.drawable.woodlog));
 		
-		this.map.put(R.drawable.frog_blue, 		BitmapFactory.decodeResource(res, R.drawable.frog_blue));
-		this.map.put(R.drawable.frog_pink, 		BitmapFactory.decodeResource(res, R.drawable.frog_pink));
-		this.map.put(R.drawable.frog_yellow, 		BitmapFactory.decodeResource(res, R.drawable.frog_yellow));
-		this.map.put(R.drawable.frog_red, 		BitmapFactory.decodeResource(res, R.drawable.frog_red));
+		this.map.put(R.drawable.maid_blue, 		BitmapFactory.decodeResource(res, R.drawable.maid_blue));
+		this.map.put(R.drawable.maid_pink, 		BitmapFactory.decodeResource(res, R.drawable.maid_pink));
+		this.map.put(R.drawable.maid_yellow, 		BitmapFactory.decodeResource(res, R.drawable.maid_yellow));
+		this.map.put(R.drawable.maid_green, 		BitmapFactory.decodeResource(res, R.drawable.maid_green));
+		
+		this.map.put(R.drawable.queen_blue, 		BitmapFactory.decodeResource(res, R.drawable.queen_blue));
+		this.map.put(R.drawable.queen_pink, 		BitmapFactory.decodeResource(res, R.drawable.queen_pink));
+		this.map.put(R.drawable.queen_yellow, 		BitmapFactory.decodeResource(res, R.drawable.queen_yellow));
+		this.map.put(R.drawable.queen_green, 		BitmapFactory.decodeResource(res, R.drawable.queen_green));
 	}
 		
 	public Bitmap get(int id){

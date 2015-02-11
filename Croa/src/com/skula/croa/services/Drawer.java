@@ -29,19 +29,19 @@ public class Drawer {
 
 		// deux grenouilles
 		int x0 = 280 - 10;
-		int y0 = 0;
-		c.drawBitmap(lib.get(R.drawable.frog_blue), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-				new Rect(x0, y0, x0+Cnst.FROG_WIDTH+20, y0+ Cnst.FROG_HEIGHT+20), paint);
+		int y0 = -10;
+		c.drawBitmap(lib.get(R.drawable.maid_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
 		x0 += 30;
 		y0 += 20;
-		c.drawBitmap(lib.get(R.drawable.frog_yellow), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-				new Rect(x0, y0, x0+Cnst.FROG_WIDTH+20, y0+ Cnst.FROG_HEIGHT+20), paint);
+		c.drawBitmap(lib.get(R.drawable.maid_blue), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
 		
 		// une grenouille
 		x0 = 280 + 100 -5;
-		y0 = 0 + 10;
-		c.drawBitmap(lib.get(R.drawable.frog_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-				new Rect(x0, y0, x0+Cnst.FROG_WIDTH+20, y0+ Cnst.FROG_HEIGHT+20), paint);
+		y0 = 5 ;
+		c.drawBitmap(lib.get(R.drawable.queen_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
 	}
 
 	public void drawScores(Canvas c) {
