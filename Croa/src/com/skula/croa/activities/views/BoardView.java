@@ -6,13 +6,16 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.skula.croa.services.Drawer;
+import com.skula.croa.services.GameEngine;
 
 public class BoardView extends View {
 	private Drawer drawer;
+	private GameEngine engine;
 
 	public BoardView(Context context, int nPlayers) {
 		super(context);
-		this.drawer = new Drawer(context.getResources());
+		this.engine = new GameEngine(nPlayers);
+		this.drawer = new Drawer(context.getResources(), engine);
 	}
 
 	@Override

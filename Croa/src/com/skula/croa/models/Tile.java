@@ -23,7 +23,7 @@ public class Tile {
 		this.type = type;
 		this.backType = backType;
 		this.maleId = maleId;
-		this.hidden = true;
+		this.hidden = !true;
 	}
 
 	public int getType() {

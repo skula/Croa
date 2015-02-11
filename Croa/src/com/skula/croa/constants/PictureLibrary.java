@@ -32,6 +32,11 @@ public class PictureLibrary{
 		this.map.put(R.drawable.reed, 		BitmapFactory.decodeResource(res, R.drawable.reed));
 		this.map.put(R.drawable.waterlilly, 		BitmapFactory.decodeResource(res, R.drawable.waterlilly));
 		this.map.put(R.drawable.woodlog, 		BitmapFactory.decodeResource(res, R.drawable.woodlog));
+		
+		this.map.put(R.drawable.frog_blue, 		BitmapFactory.decodeResource(res, R.drawable.frog_blue));
+		this.map.put(R.drawable.frog_green, 		BitmapFactory.decodeResource(res, R.drawable.frog_green));
+		this.map.put(R.drawable.frog_yellow, 		BitmapFactory.decodeResource(res, R.drawable.frog_yellow));
+		this.map.put(R.drawable.frog_red, 		BitmapFactory.decodeResource(res, R.drawable.frog_red));
 	}
 		
 	public Bitmap get(int id){
