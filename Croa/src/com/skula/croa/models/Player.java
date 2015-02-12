@@ -1,5 +1,6 @@
 package com.skula.croa.models;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,10 @@ public class Player {
 	public void addMaid(int x, int y) {
 		maids.add(new Frog(x, y));
 		maidsLeft--;
+	}
+	
+	public void removeMaid(int x, int y) {
+		maids.remove(getMaid(x,y));
 	}
 
 	public void setQueen(int x, int y) {

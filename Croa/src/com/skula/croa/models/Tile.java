@@ -27,6 +27,11 @@ public class Tile {
 		this.maleId = maleId;
 		this.hidden = !true;
 	}
+	
+	public static boolean areTilesAdjacent(int xSrc, int ySrc, int xDest, int yDest) {
+		return xDest >= xSrc - 1 && xDest <= xSrc + 1 && yDest >= ySrc - 1
+				&& yDest <= ySrc + 1;
+	}
 
 	public TileType getType() {
 		return type;

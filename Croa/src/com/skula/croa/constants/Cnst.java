@@ -1,5 +1,7 @@
 package com.skula.croa.constants;
 
+import com.skula.croa.R;
+
 public class Cnst {
 	// damier
 	public static final int COLUMNS_COUNT = 8;
@@ -17,4 +19,34 @@ public class Cnst {
 
 	public static final int SPACE_MAX_SINGLE = 1;
 	public static final int SPACE_MAX_DOUBLE = 2;
+	
+	public static int getMaidPictId(int playerId){
+		switch (playerId) {
+		case 0:
+			return R.drawable.maid_blue;
+		case 1:
+			return R.drawable.maid_pink;
+		case 2:
+			return R.drawable.maid_green;
+		case 3:
+			return R.drawable.maid_yellow;
+		default:
+			return 0;
+		}	
+	}
+	
+	public static int getQueenPictId(int playerId){
+		switch (playerId) {
+		case 0:
+			return R.drawable.queen_blue;
+		case 1:
+			return R.drawable.queen_pink;
+		case 2:
+			return R.drawable.queen_green;
+		case 3:
+			return R.drawable.queen_yellow;
+		default:
+			return 0;
+		}	
+	}
 }

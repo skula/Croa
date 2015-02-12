@@ -56,28 +56,23 @@ public class BoardView extends View {
 		return true;
 	}
 	
-	private boolean getTile(int x, int y) {
-		int x0 = 280;
-		int y0 = 0;
-		int x1 = x0 + Cnst.COLUMNS_COUNT * Cnst.TILE_SIZE;
-		int y1 = y0 + Cnst.ROWS_COUNT * Cnst.TILE_SIZE;
-		Rect rect = null;		
-		
-		rect = new Rect(x0, y0, x1, y1);
-		if(!rect.contains(x,y)){
+	private boolean getTile(int x, int y) {	
+		int size = Cnst.COLUMNS_COUNT * Cnst.TILE_SIZE;
+		if(x >= Cnst.X0 && x <= Cnst.X0 + size && y >= Cnst.Y0 && y <= Cnst.Y0 + size){
+			xTile = ((x - Cnst.X0) * Cnst.COLUMNS_COUNT) / (size);
+			yTile = ((y - Cnst.Y0) * Cnst.ROWS_COUNT) / (size);
+			return true;
+		}else{
 			xTile = -1;
 			yTile = -1;
 			return false;
 		}
-		
-		xTile = ((x - x0) * Cnst.COLUMNS_COUNT) / (Cnst.COLUMNS_COUNT*Cnst.TILE_SIZE);
-		yTile = ((y - y0) * Cnst.ROWS_COUNT) / (Cnst.ROWS_COUNT*Cnst.TILE_SIZE);
-		return true;
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		drawer.draw(canvas);
+		
 		Paint p = new Paint();
 		p.setColor(Color.RED);
 		p.setTextSize(20f);

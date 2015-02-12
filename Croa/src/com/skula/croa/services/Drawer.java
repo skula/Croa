@@ -25,50 +25,33 @@ public class Drawer {
 
 	public void draw(Canvas c) {
 		drawTiles(c);
-		//sel
-		c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, 80, 80),
-				new Rect(Cnst.X0+Cnst.TILE_SIZE, Cnst.Y0+Cnst.TILE_SIZE, Cnst.X0+Cnst.TILE_SIZE+Cnst.TILE_SIZE, Cnst.Y0+Cnst.TILE_SIZE+Cnst.TILE_SIZE),  paint);
 		drawCursors(c);
 		drawFrogs(c);
 		drawScores(c);
-
-		// deux grenouilles
-		int x0 = Cnst.X0 - 10;
-		int y0 = Cnst.Y0 - 10;
-		c.drawBitmap(lib.get(R.drawable.maid_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
-		x0 += 30;
-		y0 += 20;
-		c.drawBitmap(lib.get(R.drawable.maid_blue), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
-		
-		// une grenouille
-		x0 = Cnst.X0 + 100 -5;
-		y0 = Cnst.Y0 + 5 ;
-		c.drawBitmap(lib.get(R.drawable.queen_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
-		
-		
+	}
+	
+	private void drawScores(Canvas c) {
+		// nombre de grenouilles restante
+		// males restant
+		// tombe (si reine morte)
 	}
 
-	public void drawCursors(Canvas c) {
+	private void drawCursors(Canvas c) {
 		int token = engine.getToken();
+		Rect r  = null;
 		for(Frog f : engine.getPlayer(token).getMaids()){
-			Rect r = new Rect(Cnst.X0 + f.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + f.getyPos()*Cnst.TILE_SIZE, 
+			r = new Rect(Cnst.X0 + f.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + f.getyPos()*Cnst.TILE_SIZE, 
 							Cnst.X0 + (f.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (f.getyPos()+1) * Cnst.TILE_SIZE);
-			// TODO
+			c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE), r,  paint);
 		}
 		
 		Frog q = engine.getPlayer(token).getQueen();
-		Rect r = new Rect(Cnst.X0 + q.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + q.getyPos()*Cnst.TILE_SIZE, 
+		r = new Rect(Cnst.X0 + q.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + q.getyPos()*Cnst.TILE_SIZE, 
 							Cnst.X0 + (q.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (q.getyPos()+1) * Cnst.TILE_SIZE);
+		c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE), r,  paint);
 	}
 	
-	public void drawScores(Canvas c) {
-
-	}
-
-	public void drawFrogs(Canvas c) {
+	private void drawFrogs(Canvas c) {
 		TileOccupants occ = null;
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
@@ -77,78 +60,48 @@ public class Drawer {
 				if (occ.getCount() == 1) {
 					switch (occ.getFrog1Id()) {
 					case 0:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
+						id = occ.isFrog1queen()?R.drawable.queen_blue:R.drawable.maid_blue;
 						break;
 					case 1:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
+						id = occ.isFrog1queen()?R.drawable.queen_pink:R.drawable.maid_pink;
 						break;
 					case 2:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
+						id = occ.isFrog1queen()?R.drawable.queen_green:R.drawable.maid_green;
 						break;
 					case 3:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
+						id = occ.isFrog1queen()?R.drawable.queen_yellow:R.drawable.maid_yellow;
 						break;
 					}
-
-					// draw in the middle
+					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+								 new Rect(Cnst.X0-5 + j * Cnst.TILE_SIZE -5, Cnst.Y0+5 + i * Cnst.TILE_SIZE , 
+										  Cnst.X0-5 + (j+1) * Cnst.TILE_SIZE , Cnst.Y0+5 + (i+1) * Cnst.TILE_SIZE) , 
+								 paint);
 				} else if (occ.getCount() == 2) {
-					switch (occ.getFrog1Id()) {
-					case 0:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					case 1:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					case 2:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					case 3:
-						// id = occ.isFrog1Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
+					int id1 = 0;
+					int id2 = 0;
+					if(occ.isFrog1queen()){
+						id1 = Cnst.getMaidPictId(occ.getFrog2Id());
+						id2 = Cnst.getQueenPictId(occ.getFrog1Id());
+					} else if(occ.isFrog2queen()){
+						id1 = Cnst.getMaidPictId(occ.getFrog1Id());
+						id2 = Cnst.getQueenPictId(occ.getFrog2Id());
+					} else {
+						id1 = Cnst.getMaidPictId(occ.getFrog1Id());
+						id2 = Cnst.getMaidPictId(occ.getFrog2Id());
 					}
-
-					// draw on the left
-
-					switch (occ.getFrog2Id()) {
-					case 0:
-						// id = occ.isFrog2Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					case 1:
-						// id = occ.isFrog2Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					case 2:
-						// id = occ.isFrog2Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					case 3:
-						// id = occ.isFrog2Queen()?
-						// R.drawable.queen_red:R.drawable.frog_red;
-						break;
-					}
-
-					// draw on the right
+					
+					c.drawBitmap(lib.get(R.drawable.maid_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+							new Rect(Cnst.X0 - 10, Cnst.Y0 - 10, 
+									 Cnst.X0 - 10 + Cnst.FROG_WIDTH, Cnst.Y0 - 10+ Cnst.FROG_HEIGHT), paint);
+					c.drawBitmap(lib.get(R.drawable.maid_blue), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+							new Rect(Cnst.X0 + 20, Cnst.Y0 + 10, 
+									 Cnst.X0 + 20 + Cnst.FROG_WIDTH, Cnst.Y0 + 10 + Cnst.FROG_HEIGHT), paint);
 				}
 			}
 		}
 	}
 
-	public void drawTiles(Canvas c) {
-		int x0 = Cnst.X0;
-		int y0 = Cnst.Y0;
-
-		int dx = Cnst.TILE_SIZE;
-		int dy = Cnst.TILE_SIZE;
-
+	private void drawTiles(Canvas c) {
 		Tile[][] tiles = engine.getTiles();
 
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
@@ -210,14 +163,10 @@ public class Drawer {
 						break;
 					}
 				}
-				try {
-					c.drawBitmap(lib.get(id), new Rect(0, 0, 100, 100),
-							new Rect(x0 + dx * j, y0 + dy * i, x0 + dx * j
-									+ Cnst.TILE_SIZE, y0 + dy * i
-									+ Cnst.TILE_SIZE), paint);
-				} catch (Exception e) {
-					e.getMessage();
-				}
+				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE),
+						new Rect(Cnst.X0 + Cnst.TILE_SIZE * j, Cnst.Y0 + Cnst.TILE_SIZE * i, 
+								 Cnst.X0 + Cnst.TILE_SIZE * (j +1), Cnst.Y0 + Cnst.TILE_SIZE * (i +1)), paint);
+				
 			}
 		}
 	}
