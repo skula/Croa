@@ -25,6 +25,9 @@ public class Drawer {
 
 	public void draw(Canvas c) {
 		drawTiles(c);
+		//sel
+		c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, 80, 80),
+				new Rect(Cnst.X0+Cnst.TILE_SIZE, Cnst.Y0+Cnst.TILE_SIZE, Cnst.X0+Cnst.TILE_SIZE+Cnst.TILE_SIZE, Cnst.Y0+Cnst.TILE_SIZE+Cnst.TILE_SIZE),  paint);
 		drawCursors(c);
 		drawFrogs(c);
 		drawScores(c);
@@ -44,6 +47,8 @@ public class Drawer {
 		y0 = Cnst.Y0 + 5 ;
 		c.drawBitmap(lib.get(R.drawable.queen_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
 				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
+		
+		
 	}
 
 	public void drawCursors(Canvas c) {
