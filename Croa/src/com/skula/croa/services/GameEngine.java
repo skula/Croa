@@ -288,6 +288,9 @@ public class GameEngine {
 			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 1);
 			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 2);
 			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT - 1);
+			
+
+			p.addMaid(0, 0);
 			players.add(p);
 		} else if (nPlayers == 3) {
 			p = new Player(0);
