@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import com.skula.croa.R;
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.constants.PictureLibrary;
+import com.skula.croa.models.Frog;
 import com.skula.croa.models.Tile;
 import com.skula.croa.models.TileOccupants;
 
@@ -24,12 +25,13 @@ public class Drawer {
 
 	public void draw(Canvas c) {
 		drawTiles(c);
+		drawCursors(c);
 		drawFrogs(c);
 		drawScores(c);
 
 		// deux grenouilles
-		int x0 = 280 - 10;
-		int y0 = -10;
+		int x0 = Cnst.X0 - 10;
+		int y0 = Cnst.Y0 - 10;
 		c.drawBitmap(lib.get(R.drawable.maid_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
 				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
 		x0 += 30;
@@ -38,21 +40,34 @@ public class Drawer {
 				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
 		
 		// une grenouille
-		x0 = 280 + 100 -5;
-		y0 = 5 ;
+		x0 = Cnst.X0 + 100 -5;
+		y0 = Cnst.Y0 + 5 ;
 		c.drawBitmap(lib.get(R.drawable.queen_pink), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
 				new Rect(x0, y0, x0+Cnst.FROG_WIDTH, y0+ Cnst.FROG_HEIGHT), paint);
 	}
 
+	public void drawCursors(Canvas c) {
+		int token = engine.getToken();
+		for(Frog f : engine.getPlayer(token).getMaids()){
+			Rect r = new Rect(Cnst.X0 + f.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + f.getyPos()*Cnst.TILE_SIZE, 
+							Cnst.X0 + (f.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (f.getyPos()+1) * Cnst.TILE_SIZE);
+			// TODO
+		}
+		
+		Frog q = engine.getPlayer(token).getQueen();
+		Rect r = new Rect(Cnst.X0 + q.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + q.getyPos()*Cnst.TILE_SIZE, 
+							Cnst.X0 + (q.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (q.getyPos()+1) * Cnst.TILE_SIZE);
+	}
+	
 	public void drawScores(Canvas c) {
 
 	}
 
 	public void drawFrogs(Canvas c) {
 		TileOccupants occ = null;
-		for (int i = 0; i < Cnst.ROW_COUNT; i++) {
+		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
-				occ = engine.getOccupants(j, i);
+				occ = engine.getTileOccupants(j, i);
 				int id = 0;
 				if (occ.getCount() == 1) {
 					switch (occ.getFrog1Id()) {
@@ -123,15 +138,15 @@ public class Drawer {
 	}
 
 	public void drawTiles(Canvas c) {
-		int x0 = 280;
-		int y0 = 0;
+		int x0 = Cnst.X0;
+		int y0 = Cnst.Y0;
 
 		int dx = Cnst.TILE_SIZE;
 		int dy = Cnst.TILE_SIZE;
 
 		Tile[][] tiles = engine.getTiles();
 
-		for (int i = 0; i < Cnst.ROW_COUNT; i++) {
+		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
 				int id = 0;
 				if (tiles[j][i].isHidden()) {

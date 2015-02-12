@@ -3,7 +3,9 @@ package com.skula.croa.constants;
 public class Cnst {
 	// damier
 	public static final int COLUMNS_COUNT = 8;
-	public static final int ROW_COUNT = 8;
+	public static final int ROWS_COUNT = 8;
+	public static final int X0 = 280;
+	public static final int Y0 = 0;
 	
 	// pictures
 	public static final int TILE_SIZE = 90;

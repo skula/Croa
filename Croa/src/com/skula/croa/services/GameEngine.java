@@ -28,8 +28,9 @@ public class GameEngine {
 
 	public static void main(String[] args) {
 		GameEngine ge = new GameEngine(3);
-		ge.positionTiles();
-		ge.test();
+		// ge.positionTiles();
+		// ge.test();
+
 	}
 
 	public GameEngine(int nPlayers) {
@@ -46,93 +47,87 @@ public class GameEngine {
 	}
 
 	public void test() {
-		TileOccupants occ = getOccupants(0, 0);
+		TileOccupants occ = getTileOccupants(0, 0);
 		occ.getCount();
 	}
 
 	// POUR L'INSTANT: une et une seule grenouille par tuile maximum !!!!!
 	public boolean canProcess() {
-		if (isSrcSelected()) {
-			if (!isDestSelected()) {
-				// si case sans grenouille du joueur: RAZ
-				if (!players.get(pToken).hasMaid(xSrc, ySrc)
-						&& !players.get(pToken).hasQueen(xSrc, ySrc)) {
-					clearSrcPosition();
-					return false;
-				}
-				return true;
+		if (!isDestSelected()) {
+			// si case sans grenouille du joueur: RAZ
+			if (!players.get(pToken).hasMaid(xSrc, ySrc)
+					&& !players.get(pToken).hasQueen(xSrc, ySrc)) {
+				clearSrcPosition();
+				clearDestPosition();
+				return false;
 			} else {
-				
-				// clique sur la meme case: on deselectionne
-				if(xDest == xSrc && yDest == ySrc){
-					clearDestPosition();
-					clearSrcPosition();
-					return false;
-				}
-				
-				// si pas une case adjacente
-				if(!canMove(xSrc, ySrc, xDest, yDest)){
-					clearSrcPosition();
-					clearDestPosition();
-					return false;
-				}
-				
-				// recherche de la grenouille du joueur (reine ou grenouille)
-				TileOccupants occ = getOccupants(xSrc, ySrc);
-				if (occ.getCount() == 1) {
-					if(occ.isFrog1queen()){
-						return canQueenMove(pToken, xDest, yDest);
-					}else{
-						return canMaidMove(pToken, xDest, yDest);
-					}
-				} else if (occ.getCount() == 2) {
-					if(occ.getFrog1Id() == pToken){
-						if(occ.isFrog1queen()){
-							if(canQueenMove(pToken, xDest, yDest)){
-								isQueenSel = true;
-							}else{
-								clearSrcPosition();
-								clearDestPosition();
-								return false;
-							}
-						}else{
-							if(canMaidMove(pToken, xDest, yDest)){
-								isQueenSel = false;
-							}else{
-								clearSrcPosition();
-								clearDestPosition();
-								return false;
-							}
-						}
-					}else{
-						if(occ.isFrog2queen()){
-							if(canQueenMove(pToken, xDest, yDest)){
-								isQueenSel = true;
-							}else{
-								clearSrcPosition();
-								clearDestPosition();
-								return false;
-							}
-						}else{
-							if(canMaidMove(pToken, xDest, yDest)){
-								isQueenSel = false;
-							}else{
-								clearSrcPosition();
-								clearDestPosition();
-								return false;
-							}
-						}
-					}
-				}
+				return true;
 			}
 		} else {
-			// choix multiples ?? reine + servante, rondin de bois ??
+
+			// clique sur la meme case: on deselectionne
+			if (xDest == xSrc && yDest == ySrc) {
+				clearSrcPosition();
+				clearDestPosition();
+				return false;
+			}
+
+			// si pas une case adjacente
+			if (!areTilesAdjacent(xSrc, ySrc, xDest, yDest)) {
+				clearSrcPosition();
+				clearDestPosition();
+				return false;
+			}
+
+			// recherche de la grenouille du joueur (reine ou grenouille)
+			TileOccupants occ = getTileOccupants(pToken, xSrc, ySrc);
+			if (occ.getCount() == 1) {
+				if (occ.isFrog1queen()) {
+					if(canQueenMove(pToken, xDest, yDest)){
+						isQueenSel = true;
+						return true;						
+					}else{
+						clearSrcPosition();
+						clearDestPosition();
+						return false;
+					}
+				} else {
+					if(canMaidMove(pToken, xDest, yDest)){
+						isQueenSel = false;
+						return true;						
+					}else{
+						clearSrcPosition();
+						clearDestPosition();
+						return false;
+					}
+				}
+			} else if (occ.getCount() == 2) {
+				if (occ.isFrog1queen()) {
+					if (canQueenMove(pToken, xDest, yDest)) {
+						isQueenSel = true;
+						return true;
+					} else {
+						clearSrcPosition();
+						clearDestPosition();
+						return false;
+					}
+				} else {
+					if (canMaidMove(pToken, xDest, yDest)) {
+						isQueenSel = false;
+						return true;
+					} else {
+						clearSrcPosition();
+						clearDestPosition();
+						return false;
+					}
+				}				
+			}
 		}
 		return false;
 	}
 
 	public void process() {
-		players.get(pToken).getMaid(xSrc, ySrc).moveTo(xDest, yDest);
+		//players.get(pToken).getMaid(xSrc, ySrc).moveTo(xDest, yDest);
 		switch (tiles[xDest][yDest].getType()) {
 		case MOSQUITO:
 			break;
@@ -155,7 +150,7 @@ public class GameEngine {
 		}
 	}
 
-	public boolean canMove(int xSrc, int ySrc, int xDest, int yDest) {
+	public boolean areTilesAdjacent(int xSrc, int ySrc, int xDest, int yDest) {
 		return xDest >= xSrc - 1 && xDest <= xSrc + 1 && yDest >= ySrc - 1
 				&& yDest <= ySrc + 1;
 	}
@@ -184,7 +179,7 @@ public class GameEngine {
 		return 0;
 	}
 
-	public TileOccupants getOccupants(int x, int y) {
+	public TileOccupants getTileOccupants(int x, int y) {
 		TileOccupants occ = new TileOccupants();
 
 		for (Player p : players) {
@@ -193,11 +188,28 @@ public class GameEngine {
 			}
 
 			for (Frog f : p.getMaids()) {
-				if (f.getxPos() == x && f.getyPos() == y) {
+				if (f.isThere(x, y)) {
 					occ.addOccupant(p.getId(), false);
 				}
 			}
 		}
+
+		return occ;
+	}
+	
+	public TileOccupants getTileOccupants(int id, int x, int y) {
+		TileOccupants occ = new TileOccupants();
+
+		Player p = players.get(id);
+		if (p.hasQueen(x, y)) {
+			occ.addOccupant(p.getId(), true);
+		}
+
+		for (Frog f : p.getMaids()) {
+			if (f.getxPos() == x && f.getyPos() == y) {
+				occ.addOccupant(p.getId(), false);
+			}
+		}		
 
 		return occ;
 	}
@@ -212,9 +224,9 @@ public class GameEngine {
 			players.add(p);
 
 			p = new Player(1);
-			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROW_COUNT - 1);
-			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROW_COUNT - 2);
-			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROW_COUNT - 1);
+			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 1);
+			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 2);
+			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT - 1);
 			players.add(p);
 		} else if (nPlayers == 3) {
 			p = new Player(0);
@@ -224,15 +236,15 @@ public class GameEngine {
 			players.add(p);
 
 			p = new Player(1);
-			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROW_COUNT / 2);
-			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROW_COUNT / 2 - 1);
-			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROW_COUNT / 2 + 1);
+			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT / 2);
+			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT / 2 - 1);
+			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT / 2 + 1);
 			players.add(p);
 
 			p = new Player(2);
-			p.setQueen(0, Cnst.ROW_COUNT - 1);
-			p.addMaid(0, Cnst.ROW_COUNT - 2);
-			p.addMaid(1, Cnst.ROW_COUNT - 1);
+			p.setQueen(0, Cnst.ROWS_COUNT - 1);
+			p.addMaid(0, Cnst.ROWS_COUNT - 2);
+			p.addMaid(1, Cnst.ROWS_COUNT - 1);
 			players.add(p);
 
 		} else {
@@ -249,15 +261,15 @@ public class GameEngine {
 			players.add(p);
 
 			p = new Player(2);
-			p.setQueen(0, Cnst.ROW_COUNT - 1);
-			p.addMaid(0, Cnst.ROW_COUNT - 2);
-			p.addMaid(1, Cnst.ROW_COUNT - 1);
+			p.setQueen(0, Cnst.ROWS_COUNT - 1);
+			p.addMaid(0, Cnst.ROWS_COUNT - 2);
+			p.addMaid(1, Cnst.ROWS_COUNT - 1);
 			players.add(p);
 
 			p = new Player(3);
-			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROW_COUNT - 1);
-			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROW_COUNT - 2);
-			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROW_COUNT - 1);
+			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 1);
+			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 2);
+			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT - 1);
 			players.add(p);
 		}
 	}
@@ -266,9 +278,9 @@ public class GameEngine {
 		List<Tile> tmp = Tile.getAllTiles();
 		Collections.shuffle(tmp);
 
-		this.tiles = new Tile[Cnst.COLUMNS_COUNT][Cnst.ROW_COUNT];
+		this.tiles = new Tile[Cnst.COLUMNS_COUNT][Cnst.ROWS_COUNT];
 
-		for (int i = 0; i < Cnst.ROW_COUNT; i++) {
+		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
 				tiles[j][i] = tmp.remove(0);
 			}
@@ -283,9 +295,9 @@ public class GameEngine {
 
 		Collections.shuffle(tmp);
 
-		this.tiles = new Tile[Cnst.COLUMNS_COUNT][Cnst.ROW_COUNT];
+		this.tiles = new Tile[Cnst.COLUMNS_COUNT][Cnst.ROWS_COUNT];
 
-		for (int i = 0; i < Cnst.ROW_COUNT; i++) {
+		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
 				tiles[j][i] = tmp.remove(0);
 			}
@@ -339,6 +351,10 @@ public class GameEngine {
 	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
 	}
+	
+	public Player getPlayer(int id) {
+		return players.get(id);
+	}
 
 	public List<Player> getPlayers() {
 		return players;
@@ -355,4 +371,10 @@ public class GameEngine {
 	public void setnPlayers(int nPlayers) {
 		this.nPlayers = nPlayers;
 	}
+
+	public int getToken() {
+		return pToken;
+	}
+	
+	
 }

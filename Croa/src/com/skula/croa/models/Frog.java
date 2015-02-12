@@ -26,6 +26,10 @@ public class Frog {
 		this.xPos = x;
 		this.yPos = y;
 	}
+	
+	public boolean isThere(int x, int y){
+		return xPos == x && yPos == y;		
+	}
 
 	public int getxPos() {
 		return xPos;
