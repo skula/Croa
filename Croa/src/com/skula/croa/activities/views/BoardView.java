@@ -39,7 +39,7 @@ public class BoardView extends View {
 			break;
 		case MotionEvent.ACTION_UP:
 			boolean res = getTile(x, y);
-			/*if(res){
+			if(res){
 				if(!engine.isSrcSelected()){
 					engine.setSrcPos(xTile, yTile);
 				}else{
@@ -47,9 +47,9 @@ public class BoardView extends View {
 				}
 				
 				if(engine.canProcess()){
-					engine.process();
+					//engine.process();
 				}
-			}*/
+			}
 			invalidate();
 			break;
 		}		
@@ -76,6 +76,7 @@ public class BoardView extends View {
 		Paint p = new Paint();
 		p.setColor(Color.RED);
 		p.setTextSize(20f);
+		
 		if(xTile!=-1){
 			canvas.drawText("(i=" + xTile + ", j:" + yTile + ")", 20, 20, p);
 		}

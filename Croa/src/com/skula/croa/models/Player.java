@@ -1,6 +1,5 @@
 package com.skula.croa.models;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,20 +76,47 @@ public class Player {
 		return Cnst.FROGS_COUNT - maidsLeft - maids.size();
 	}
 	
-	public void activeMaid(int x, int y){
-		
+	public void activeFrogsBut(int x, int y, boolean isQueen){
+		if(isQueen){
+			queen.setActive(false);
+			for(Frog f : maids){
+				f.setActive(!f.isStuck());
+			}
+		}else{
+			queen.setActive(!queen.isStuck());
+			for(Frog f : maids){
+				if(f.isThere(x, y)){
+					f.setActive(false);
+				}else{
+					f.setActive(!f.isStuck());
+				}
+			}
+		}
 	}
 	
-	public void desactiveMaid(int x, int y){
-		
+	public void desactiveFrogsBut(int x, int y, boolean isQueen){
+		if(isQueen){
+			queen.setActive(!queen.isStuck());
+			for(Frog f : maids){
+				f.setActive(false);
+			}
+		}else{
+			queen.setActive(false);
+			for(Frog f : maids){
+				if(f.isThere(x, y)){
+					f.setActive(!f.isStuck());
+				}else{
+					f.setActive(false);
+				}
+			}
+		}
 	}
 	
-	public void activeQueen(int x, int y){
-		
-	}
-	
-	public void desactiveQueen(int x, int y){
-		
+	public void activeFrogs(){
+		queen.setActive(!queen.isStuck());
+		for(Frog f: maids){
+			f.setActive(!f.isStuck());
+		}
 	}
 
 	public int getId() {

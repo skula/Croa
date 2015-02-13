@@ -25,7 +25,7 @@ public class Drawer {
 
 	public void draw(Canvas c) {
 		drawTiles(c);
-		drawCursors(c);
+		drawActiveFrogs(c);
 		drawFrogs(c);
 		drawScores(c);
 	}
@@ -36,19 +36,23 @@ public class Drawer {
 		// tombe (si reine morte)
 	}
 
-	private void drawCursors(Canvas c) {
+	private void drawActiveFrogs(Canvas c) {
 		int token = engine.getToken();
 		Rect r  = null;
 		for(Frog f : engine.getPlayer(token).getMaids()){
-			r = new Rect(Cnst.X0 + f.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + f.getyPos()*Cnst.TILE_SIZE, 
-							Cnst.X0 + (f.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (f.getyPos()+1) * Cnst.TILE_SIZE);
-			c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE), r,  paint);
+			if(f.isActive()){
+				r = new Rect(Cnst.X0 + f.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + f.getyPos()*Cnst.TILE_SIZE, 
+								Cnst.X0 + (f.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (f.getyPos()+1) * Cnst.TILE_SIZE);
+				c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE), r,  paint);
+			}
 		}
 		
-		Frog q = engine.getPlayer(token).getQueen();
-		r = new Rect(Cnst.X0 + q.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + q.getyPos()*Cnst.TILE_SIZE, 
-							Cnst.X0 + (q.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (q.getyPos()+1) * Cnst.TILE_SIZE);
-		c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE), r,  paint);
+		if(engine.getPlayer(token).getQueen().isActive()){
+			Frog q = engine.getPlayer(token).getQueen();
+			r = new Rect(Cnst.X0 + q.getxPos()*Cnst.TILE_SIZE, Cnst.Y0 + q.getyPos()*Cnst.TILE_SIZE, 
+								Cnst.X0 + (q.getxPos()+1)*Cnst.TILE_SIZE , Cnst.Y0 + (q.getyPos()+1) * Cnst.TILE_SIZE);
+			c.drawBitmap(lib.get(R.drawable.sel), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE), r,  paint);
+		}
 	}
 	
 	private void drawFrogs(Canvas c) {
@@ -65,7 +69,7 @@ public class Drawer {
 					}
 					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
 								 new Rect(Cnst.X0 + 5 + j * Cnst.TILE_SIZE, Cnst.Y0 + 5 + + i * Cnst.TILE_SIZE , 
-										  Cnst.X0 + 5 + j * Cnst.TILE_SIZE +  Cnst.FROG_WIDTH , Cnst.Y0 + 5 + i * Cnst.TILE_SIZE +  Cnst.FROG_HEIGHT) , 
+										  Cnst.X0 + 5 + j * Cnst.TILE_SIZE + Cnst.FROG_WIDTH , Cnst.Y0 + 5 + i * Cnst.TILE_SIZE +  Cnst.FROG_HEIGHT) , 
 								 paint);
 				} else if (occ.getCount() == 2) {
 					int id1 = 0;

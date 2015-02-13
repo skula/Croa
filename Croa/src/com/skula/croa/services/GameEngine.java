@@ -24,7 +24,6 @@ public class GameEngine {
 	public int yDest;
 	private int pToken;
 	private boolean isQueenSel;
-	private TileType destTileType;
 
 	public static void main(String[] args) {
 		GameEngine ge = new GameEngine(3);
@@ -40,7 +39,6 @@ public class GameEngine {
 		this.pToken = 0;
 		this.players = new ArrayList<Player>();
 		this.isQueenSel = false;
-		this.destTileType = TileType.NONE;
 		positionTiles();
 		positionFrogs();
 
@@ -57,16 +55,17 @@ public class GameEngine {
 	public boolean canProcess() {
 		if (!isDestSelected()) {
 			// si case sans grenouille du joueur: RAZ
-			if (!players.get(pToken).hasMaid(xSrc, ySrc)
-					&& !players.get(pToken).hasQueen(xSrc, ySrc)) {
-				clearSrcPosition();
-				clearDestPosition();
-				return false;
-			} else {
-				return true;
-			}
-		} else {
+			if (!players.get(pToken).hasMaid(xSrc, ySrc) || !getPlayer(pToken).getMaid(xSrc, ySrc).isActive()){
+				if (!players.get(pToken).hasQueen(xSrc, ySrc) || !getPlayer(pToken).getQueen().isActive()){
+					clearSrcPosition();
+					clearDestPosition();
+					return false;
+				}
+			}			
 
+			getPlayer(pToken).desactiveFrogsBut(xDest, yDest, players.get(pToken).hasQueen(xSrc, ySrc));
+			return true;			
+		} else {
 			// clique sur la meme case: on deselectionne
 			if (xDest == xSrc && yDest == ySrc) {
 				clearSrcPosition();
@@ -74,13 +73,14 @@ public class GameEngine {
 				return false;
 			}
 
-			// si pas une case adjacente
+			// si pas une case adjacente: RAZ
 			if (!Tile.areTilesAdjacent(xSrc, ySrc, xDest, yDest)) {
 				clearSrcPosition();
 				clearDestPosition();
 				return false;
 			}
 
+			/// si la tuile est face cachée
 			if (tiles[xDest][yDest].isHidden()) {
 				return true;
 			}
@@ -133,7 +133,7 @@ public class GameEngine {
 	}
 
 	public void process() {
-		// destTileType = tiles[xDest][yDest].getType();
+		initPlayerRound();
 
 		// deplacement
 		if (isQueenSel) {
@@ -142,7 +142,7 @@ public class GameEngine {
 			getPlayer(pToken).getMaid(xSrc, ySrc).moveTo(xDest, yDest);
 		}
 
-		// mange un enemie
+		// mange un enemie: a gérer avec la reine
 		if (tiles[xDest][yDest].getType().equals(TileType.WOODLOG)) {
 
 		} else {
@@ -152,14 +152,15 @@ public class GameEngine {
 		// execute le pouvoir de la tuile
 		switch (tiles[xDest][yDest].getType()) {
 		case MOSQUITO:
+			getPlayer(pToken).activeFrogsBut(xDest, yDest, isQueenSel);
 			break;
 		case WATERLILY:
 			break;
 		case MUD:
 			if (isQueenSel) {
-				getPlayer(pToken).getQueen().setStuck(true);
+				getPlayer(pToken).getQueen().setStuck();
 			} else {
-				getPlayer(pToken).getMaid(xDest, yDest).setStuck(true);
+				getPlayer(pToken).getMaid(xDest, yDest).setStuck();
 			}
 			nextPlayer();
 			break;
@@ -200,15 +201,18 @@ public class GameEngine {
 			}
 		}
 
-		for (Frog f : getPlayer(pToken).getMaids()) {
-			f.setStuck(false);
-		}
-		getPlayer(pToken).getQueen().setStuck(false);
-
 		clearSrcPosition();
 		clearDestPosition();
 	}
 
+	public void initPlayerRound(){
+		getPlayer(pToken).getQueen().updateStuckTime();
+		for(Frog f : getPlayer(pToken).getMaids()){
+			f.updateStuckTime();
+		}
+		getPlayer(pToken).activeFrogs();
+	}
+	
 	public boolean canReproduce(Male maleId) {
 		return getPlayer(pToken).getMalesLeft().contains(maleId)
 				&& getPlayer(pToken).getMaidsLeft() > 0;
@@ -400,7 +404,6 @@ public class GameEngine {
 	public void clearDestPosition() {
 		xDest = -1;
 		yDest = -1;
-		destTileType = TileType.NONE;
 	}
 
 	public boolean isSrcSelected() {

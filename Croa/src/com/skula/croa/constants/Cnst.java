@@ -3,6 +3,7 @@ package com.skula.croa.constants;
 import com.skula.croa.R;
 
 
+
 public class Cnst {
 	// damier
 	public static final int COLUMNS_COUNT = 8;
@@ -33,7 +34,7 @@ public class Cnst {
 			return stuck?R.drawable.maid_stuck_yellow:R.drawable.maid_yellow;
 		default:
 			return 0;
-		}	
+		}
 	}
 	
 	public static int getQueenPictId(int playerId, boolean stuck){
@@ -48,6 +49,6 @@ public class Cnst {
 			return stuck?R.drawable.queen_stuck_yellow:R.drawable.queen_yellow;
 		default:
 			return 0;
-		}	
+		}
 	}
 }

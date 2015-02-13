@@ -3,7 +3,7 @@ package com.skula.croa.models;
 public class Frog {
 	private int xPos;
 	private int yPos;
-	private boolean stuck;
+	private int stuckTime;
 	private boolean active;
 	
 	public static void main(String[] args) {
@@ -13,12 +13,12 @@ public class Frog {
 	public Frog(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.stuck = false;
+		this.stuckTime = 0;
 		this.active = true;
 	}
 	
 	public Frog() {
-		this.stuck = false;
+		this.stuckTime = 0;
 		this.active = true;
 	}
 	
@@ -29,6 +29,19 @@ public class Frog {
 	
 	public boolean isThere(int x, int y){
 		return xPos == x && yPos == y;		
+	}
+	
+	public void updateStuckTime(){
+		if(stuckTime>0){
+			stuckTime--;
+		}
+	}
+	
+	public void setStuck(){
+		stuckTime = 2;
+	}
+	public boolean isStuck(){
+		return stuckTime > 0;
 	}
 
 	public int getxPos() {
@@ -47,19 +60,11 @@ public class Frog {
 		this.yPos = yPos;
 	}
 
-	public boolean isStuck() {
-		return stuck;
-	}
-
-	public void setStuck(boolean stuck) {
-		this.stuck = stuck;
-	}
-
 	public boolean isActive() {
 		return active;
 	}
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}	
+	}
 }
