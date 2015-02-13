@@ -58,19 +58,10 @@ public class Drawer {
 				occ = engine.getTileOccupants(j, i);
 				int id = 0;
 				if (occ.getCount() == 1) {
-					switch (occ.getFrog1Id()) {
-					case 0:
-						id = occ.isFrog1queen()?R.drawable.queen_blue:R.drawable.maid_blue;
-						break;
-					case 1:
-						id = occ.isFrog1queen()?R.drawable.queen_pink:R.drawable.maid_pink;
-						break;
-					case 2:
-						id = occ.isFrog1queen()?R.drawable.queen_green:R.drawable.maid_green;
-						break;
-					case 3:
-						id = occ.isFrog1queen()?R.drawable.queen_yellow:R.drawable.maid_yellow;
-						break;
+					if(occ.isFrog1queen()){
+						id = Cnst.getQueenPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
+					}else{
+						id = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
 					}
 					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
 								 new Rect(Cnst.X0 + 5 + j * Cnst.TILE_SIZE, Cnst.Y0 + 5 + + i * Cnst.TILE_SIZE , 
@@ -80,14 +71,14 @@ public class Drawer {
 					int id1 = 0;
 					int id2 = 0;
 					if(occ.isFrog1queen()){
-						id1 = Cnst.getMaidPictId(occ.getFrog2Id());
-						id2 = Cnst.getQueenPictId(occ.getFrog1Id());
+						id1 = Cnst.getMaidPictId(occ.getFrog2Id(), occ.isFrog2Stuck());
+						id2 = Cnst.getQueenPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
 					} else if(occ.isFrog2queen()){
-						id1 = Cnst.getMaidPictId(occ.getFrog1Id());
-						id2 = Cnst.getQueenPictId(occ.getFrog2Id());
+						id1 = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
+						id2 = Cnst.getQueenPictId(occ.getFrog2Id(), occ.isFrog2Stuck());
 					} else {
-						id1 = Cnst.getMaidPictId(occ.getFrog1Id());
-						id2 = Cnst.getMaidPictId(occ.getFrog2Id());
+						id1 = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
+						id2 = Cnst.getMaidPictId(occ.getFrog2Id(), occ.isFrog2Stuck());
 					}
 					
 					c.drawBitmap(lib.get(id1), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
@@ -170,7 +161,6 @@ public class Drawer {
 				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.TILE_SIZE, Cnst.TILE_SIZE),
 						new Rect(Cnst.X0 + Cnst.TILE_SIZE * j, Cnst.Y0 + Cnst.TILE_SIZE * i, 
 								 Cnst.X0 + Cnst.TILE_SIZE * (j +1), Cnst.Y0 + Cnst.TILE_SIZE * (i +1)), paint);
-				
 			}
 		}
 	}

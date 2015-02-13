@@ -4,7 +4,7 @@ public class Frog {
 	private int xPos;
 	private int yPos;
 	private boolean stuck;
-	private int weight;
+	private boolean active;
 	
 	public static void main(String[] args) {
 
@@ -14,12 +14,12 @@ public class Frog {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.stuck = false;
-		this.weight = 1;
+		this.active = true;
 	}
 	
 	public Frog() {
 		this.stuck = false;
-		this.weight = 1;
+		this.active = true;
 	}
 	
 	public void moveTo(int x, int y){
@@ -55,12 +55,11 @@ public class Frog {
 		this.stuck = stuck;
 	}
 
-	public int getWeight() {
-		return weight;
+	public boolean isActive() {
+		return active;
 	}
 
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-	
+	public void setActive(boolean active) {
+		this.active = active;
+	}	
 }

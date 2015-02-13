@@ -5,8 +5,10 @@ public class TileOccupants {
 	
 	private int frog1Id;
 	private int frog2Id;
-	private boolean frog1queen;
+	private boolean frog1Queen;
 	private boolean frog2queen;
+	private boolean frog1Stuck;
+	private boolean frog2Stuck;
 	
 	public static void main(String[] args) {
 
@@ -16,21 +18,23 @@ public class TileOccupants {
 		this.count = 0;
 		this.frog1Id = -1;
 		this.frog2Id = -1;
-		this.frog1queen = false;
+		this.frog1Queen = false;
 		this.frog2queen = false;
 	}
 	
-	public void addOccupant(int id, boolean isQueen){
+	public void addOccupant(int id, boolean isQueen, boolean stuck){
 		if(count==2){
 			return;
 		}
 		
 		if(count==0){
 			frog1Id = id;
-			frog1queen = isQueen;
+			frog1Queen = isQueen;
+			frog1Stuck = stuck;
 		}else if( count == 1){
 			frog2Id = id;
 			frog2queen = isQueen;
+			frog2Stuck = stuck;
 		}
 
 		count ++;
@@ -61,11 +65,11 @@ public class TileOccupants {
 	}
 
 	public boolean isFrog1queen() {
-		return frog1queen;
+		return frog1Queen;
 	}
 
 	public void setFrog1queen(boolean frog1queen) {
-		this.frog1queen = frog1queen;
+		this.frog1Queen = frog1queen;
 	}
 
 	public boolean isFrog2queen() {
@@ -74,5 +78,21 @@ public class TileOccupants {
 
 	public void setFrog2queen(boolean frog2queen) {
 		this.frog2queen = frog2queen;
+	}
+
+	public boolean isFrog1Stuck() {
+		return frog1Stuck;
+	}
+
+	public void setFrog1Stuck(boolean frog1Stuck) {
+		this.frog1Stuck = frog1Stuck;
+	}
+
+	public boolean isFrog2Stuck() {
+		return frog2Stuck;
+	}
+
+	public void setFrog2Stuck(boolean frog2Stuck) {
+		this.frog2Stuck = frog2Stuck;
 	}
 }

@@ -76,6 +76,22 @@ public class Player {
 	public int getDeadFrogs() {
 		return Cnst.FROGS_COUNT - maidsLeft - maids.size();
 	}
+	
+	public void activeMaid(int x, int y){
+		
+	}
+	
+	public void desactiveMaid(int x, int y){
+		
+	}
+	
+	public void activeQueen(int x, int y){
+		
+	}
+	
+	public void desactiveQueen(int x, int y){
+		
+	}
 
 	public int getId() {
 		return id;

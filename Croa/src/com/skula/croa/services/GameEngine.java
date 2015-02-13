@@ -30,6 +30,9 @@ public class GameEngine {
 		GameEngine ge = new GameEngine(3);
 		// ge.positionTiles();
 		// ge.test();
+		
+		TileOccupants occ = ge.getTileOccupants(0, 0);
+		occ.getClass();
 	}
 
 	public GameEngine(int nPlayers) {
@@ -244,13 +247,13 @@ public class GameEngine {
 		TileOccupants occ = new TileOccupants();
 
 		for (Player p : players) {
-			if (p.getQueen().getxPos() == x && p.getQueen().getxPos() == y) {
-				occ.addOccupant(p.getId(), true);
+			if (p.hasQueen(x, y)) {
+				occ.addOccupant(p.getId(), true, p.getQueen().isStuck());
 			}
 
 			for (Frog f : p.getMaids()) {
 				if (f.isThere(x, y)) {
-					occ.addOccupant(p.getId(), false);
+					occ.addOccupant(p.getId(), false, f.isStuck());
 				}
 			}
 		}
@@ -263,12 +266,12 @@ public class GameEngine {
 
 		Player p = players.get(id);
 		if (p.hasQueen(x, y)) {
-			occ.addOccupant(p.getId(), true);
+			occ.addOccupant(p.getId(), true, p.getQueen().isStuck());
 		}
 
 		for (Frog f : p.getMaids()) {
 			if (f.getxPos() == x && f.getyPos() == y) {
-				occ.addOccupant(p.getId(), false);
+				occ.addOccupant(p.getId(), false, f.isStuck());
 			}
 		}
 
@@ -310,7 +313,7 @@ public class GameEngine {
 			p.addMaid(0, Cnst.ROWS_COUNT - 2);
 			p.addMaid(1, Cnst.ROWS_COUNT - 1);
 			players.add(p);
-
+			int a;
 		} else {
 			p = new Player(0);
 			p.setQueen(0, 0);
