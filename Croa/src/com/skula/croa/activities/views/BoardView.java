@@ -47,7 +47,7 @@ public class BoardView extends View {
 				}
 				
 				if(engine.canProcess()){
-					//engine.process();
+					engine.process();
 				}
 			}
 			invalidate();

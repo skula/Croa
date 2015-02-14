@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.service.wallpaper.WallpaperService.Engine;
+
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.enums.Male;
 import com.skula.croa.enums.TileBackType;
@@ -24,21 +26,15 @@ public class GameEngine {
 	public int yDest;
 	private int pToken;
 	private boolean isQueenSel;
+	private boolean updateActivity;
 
-	public static void main(String[] args) {
-		GameEngine ge = new GameEngine(3);
-		// ge.positionTiles();
-		// ge.test();
-		
-		TileOccupants occ = ge.getTileOccupants(0, 0);
-		occ.getClass();
-	}
 
 	public GameEngine(int nPlayers) {
 		this.nPlayers = nPlayers;
 		this.pToken = 0;
 		this.players = new ArrayList<Player>();
 		this.isQueenSel = false;
+		this.updateActivity = true;
 		positionTiles();
 		positionFrogs();
 
@@ -59,17 +55,19 @@ public class GameEngine {
 				if (!players.get(pToken).hasQueen(xSrc, ySrc) || !getPlayer(pToken).getQueen().isActive()){
 					clearSrcPosition();
 					clearDestPosition();
+					getPlayer(pToken).activeFrogs();
 					return false;
 				}
 			}			
 
-			getPlayer(pToken).desactiveFrogsBut(xDest, yDest, players.get(pToken).hasQueen(xSrc, ySrc));
-			return true;			
+			getPlayer(pToken).desactiveFrogsBut(xSrc, ySrc, players.get(pToken).hasQueen(xSrc, ySrc));
+			return false;			
 		} else {
 			// clique sur la meme case: on deselectionne
 			if (xDest == xSrc && yDest == ySrc) {
 				clearSrcPosition();
 				clearDestPosition();
+				getPlayer(pToken).activeFrogs();
 				return false;
 			}
 
@@ -77,11 +75,13 @@ public class GameEngine {
 			if (!Tile.areTilesAdjacent(xSrc, ySrc, xDest, yDest)) {
 				clearSrcPosition();
 				clearDestPosition();
+				getPlayer(pToken).activeFrogs();
 				return false;
 			}
 
 			/// si la tuile est face cachée
 			if (tiles[xDest][yDest].isHidden()) {
+				getPlayer(pToken).desactiveFrogsBut(xSrc, ySrc, players.get(pToken).hasQueen(xSrc, ySrc));
 				return true;
 			}
 
@@ -91,19 +91,23 @@ public class GameEngine {
 				if (occ.isFrog1queen()) {
 					if (canQueenMove(pToken, xDest, yDest)) {
 						isQueenSel = true;
+						getPlayer(pToken).desactiveFrogsBut(xSrc, ySrc, players.get(pToken).hasQueen(xSrc, ySrc));
 						return true;
 					} else {
 						clearSrcPosition();
 						clearDestPosition();
+						getPlayer(pToken).activeFrogs();
 						return false;
 					}
 				} else {
 					if (canMaidMove(pToken, xDest, yDest)) {
 						isQueenSel = false;
+						getPlayer(pToken).desactiveFrogsBut(xSrc, ySrc, players.get(pToken).hasQueen(xSrc, ySrc));
 						return true;
 					} else {
 						clearSrcPosition();
 						clearDestPosition();
+						getPlayer(pToken).activeFrogs();
 						return false;
 					}
 				}
@@ -111,29 +115,36 @@ public class GameEngine {
 				if (occ.isFrog1queen()) {
 					if (canQueenMove(pToken, xDest, yDest)) {
 						isQueenSel = true;
+						getPlayer(pToken).desactiveFrogsBut(xSrc, ySrc, players.get(pToken).hasQueen(xSrc, ySrc));
 						return true;
 					} else {
 						clearSrcPosition();
 						clearDestPosition();
+						getPlayer(pToken).activeFrogs();
 						return false;
 					}
 				} else {
 					if (canMaidMove(pToken, xDest, yDest)) {
 						isQueenSel = false;
+						getPlayer(pToken).desactiveFrogsBut(xSrc, ySrc, players.get(pToken).hasQueen(xSrc, ySrc));
 						return true;
 					} else {
 						clearSrcPosition();
 						clearDestPosition();
+						getPlayer(pToken).activeFrogs();
 						return false;
 					}
 				}
 			}
 		}
+		getPlayer(pToken).activeFrogs();
 		return false;
 	}
 
 	public void process() {
-		initPlayerRound();
+		if(updateActivity){
+			initPlayerRound();
+		}
 
 		// deplacement
 		if (isQueenSel) {
@@ -153,8 +164,11 @@ public class GameEngine {
 		switch (tiles[xDest][yDest].getType()) {
 		case MOSQUITO:
 			getPlayer(pToken).activeFrogsBut(xDest, yDest, isQueenSel);
+			updateActivity = false;
 			break;
 		case WATERLILY:
+			clearDestPosition();
+			updateActivity = false;
 			break;
 		case MUD:
 			if (isQueenSel) {
@@ -163,6 +177,7 @@ public class GameEngine {
 				getPlayer(pToken).getMaid(xDest, yDest).setStuck();
 			}
 			nextPlayer();
+			updateActivity = true;
 			break;
 		case PIKE:
 			if (isQueenSel) {
@@ -170,18 +185,22 @@ public class GameEngine {
 			} else {
 				getPlayer(pToken).removeMaid(xDest, yDest);
 			}
+			updateActivity = true;
 			break;
 		case WOODLOG:
 			nextPlayer();
+			updateActivity = true;
 			break;
 		case REED:
 			nextPlayer();
+			updateActivity = true;
 			break;
 		case MALE:
 			if (isQueenSel && canReproduce(tiles[xDest][yDest].getMaleId())) {
 				reproduce(tiles[xDest][yDest].getMaleId());
 			}
 			nextPlayer();
+			updateActivity = true;
 			break;
 		default:
 			break;

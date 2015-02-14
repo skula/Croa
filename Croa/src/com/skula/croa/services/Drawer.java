@@ -67,8 +67,9 @@ public class Drawer {
 					}else{
 						id = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
 					}
+					
 					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-								 new Rect(Cnst.X0 + 5 + j * Cnst.TILE_SIZE, Cnst.Y0 + 5 + + i * Cnst.TILE_SIZE , 
+								 new Rect(Cnst.X0 + 5 + j * Cnst.TILE_SIZE, Cnst.Y0 + 5 + i * Cnst.TILE_SIZE , 
 										  Cnst.X0 + 5 + j * Cnst.TILE_SIZE + Cnst.FROG_WIDTH , Cnst.Y0 + 5 + i * Cnst.TILE_SIZE +  Cnst.FROG_HEIGHT) , 
 								 paint);
 				} else if (occ.getCount() == 2) {
@@ -86,11 +87,11 @@ public class Drawer {
 					}
 					
 					c.drawBitmap(lib.get(id1), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-							new Rect(Cnst.X0 - 10, Cnst.Y0 - 10, 
-									 Cnst.X0 - 10 + Cnst.FROG_WIDTH, Cnst.Y0 - 10+ Cnst.FROG_HEIGHT), paint);
+							new Rect(Cnst.X0 - 10 + j * Cnst.TILE_SIZE, Cnst.Y0 - 10 + i * Cnst.TILE_SIZE, 
+									 Cnst.X0 - 10 + Cnst.FROG_WIDTH + j * Cnst.TILE_SIZE, Cnst.Y0 - 10+ Cnst.FROG_HEIGHT + i * Cnst.TILE_SIZE), paint);
 					c.drawBitmap(lib.get(id2), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-							new Rect(Cnst.X0 + 20, Cnst.Y0 + 10, 
-									 Cnst.X0 + 20 + Cnst.FROG_WIDTH, Cnst.Y0 + 10 + Cnst.FROG_HEIGHT), paint);
+							new Rect(Cnst.X0 + 20 + j * Cnst.TILE_SIZE, Cnst.Y0 + 10 + i * Cnst.TILE_SIZE, 
+									 Cnst.X0 + 20 + Cnst.FROG_WIDTH + j * Cnst.TILE_SIZE, Cnst.Y0 + 10 + Cnst.FROG_HEIGHT + i * Cnst.TILE_SIZE), paint);
 				}
 			}
 		}
