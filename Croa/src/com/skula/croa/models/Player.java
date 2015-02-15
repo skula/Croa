@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skula.croa.constants.Cnst;
+import com.skula.croa.enums.FrogRank;
 import com.skula.croa.enums.Male;
 
 public class Player {
@@ -33,7 +34,7 @@ public class Player {
 	}
 
 	public void addMaid(int x, int y) {
-		maids.add(new Frog(x, y));
+		maids.add(new Frog(x, y, FrogRank.MAID));
 		maidsLeft--;
 	}
 	
@@ -42,7 +43,7 @@ public class Player {
 	}
 
 	public void setQueen(int x, int y) {
-		queen = new Frog(x, y);
+		queen = new Frog(x, y, FrogRank.QUEEN);
 	}
 
 	public boolean hasMaid(int x, int y) {
@@ -135,6 +136,19 @@ public class Player {
 		for (Frog f : maids) {
 			if (f.getxPos() == x && f.getyPos() == y) {
 				return f;
+			}
+		}
+		return null;
+	}
+	
+	public Frog getFrog(int id){
+		if(queen.getId()==id){
+			return queen;
+		}else{
+			for(Frog f: maids){
+				if(f.getId()==id){
+					return f;
+				}
 			}
 		}
 		return null;

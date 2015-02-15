@@ -1,16 +1,25 @@
 package com.skula.croa.models;
 
+import com.skula.croa.enums.FrogRank;
+
 public class Frog {
+	private int id;
+	private FrogRank rank;
 	private int xPos;
 	private int yPos;
 	private int stuckTime;
 	private boolean active;
 	
+	private static int SEQU_ID = 0;
+	
 	public static void main(String[] args) {
 
 	}
 
-	public Frog(int xPos, int yPos) {
+	public Frog(int xPos, int yPos, FrogRank rank) {
+		this.id = SEQU_ID;
+		SEQU_ID++ ;
+		this.rank = rank;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.stuckTime = 0;
@@ -66,5 +75,21 @@ public class Frog {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public FrogRank getRank() {
+		return rank;
+	}
+
+	public void setRank(FrogRank rank) {
+		this.rank = rank;
 	}
 }
