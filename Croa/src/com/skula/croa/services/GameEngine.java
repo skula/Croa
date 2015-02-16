@@ -23,9 +23,12 @@ public class GameEngine {
 	public int xDest;
 	public int yDest;
 	private int pToken;
+	private Player cPlayer;
 	private boolean isQueenSel;
 	private boolean updateFrogsActivity;
 	private TileType typeDest;
+	
+	private List<Integer> playableFrogs;
 
 	public GameEngine(int nPlayers) {
 		this.nPlayers = nPlayers;
@@ -34,20 +37,28 @@ public class GameEngine {
 		this.isQueenSel = false;
 		this.updateFrogsActivity = true;
 		this.typeDest = TileType.NONE;
-		positionTiles();
-		positionFrogs();
-
 		clearSrcPosition();
 		clearDestPosition();
+		
+		positionTiles();
+		
+		positionFrogs();
+		updatePlayableFrogs();
+		
+		cPlayer = getPlayer(pToken);
 	}
-
-	public void test() {
-		TileOccupants occ = getTileOccupants(0, 0);
-		occ.getCount();
+	
+	public boolean canSrcSelect(int x, int y){
+		Frog f = cPlayer.getMaid(x, y);
+		if(f!=null){
+			return true;
+		}else{
+			return cPlayer.hasQueen(x, y) && isPlayable(cPlayer.getQueen().getId());
+		}
 	}
 
 	// POUR L'INSTANT: une et une seule grenouille par tuile maximum !!!!!
-	public boolean canProcess() {
+	/*public boolean canProcess() {
 		if (!isDestSelected()) {
 			// si case sans grenouille du joueur: RAZ
 			if (!players.get(pToken).hasMaid(xSrc, ySrc) || !getPlayer(pToken).getMaid(xSrc, ySrc).isActive()){
@@ -173,7 +184,7 @@ public class GameEngine {
 		}
 		getPlayer(pToken).activeFrogs();
 		return false;
-	}
+	}*/
 
 	public void process() {
 		if(updateFrogsActivity){
@@ -243,6 +254,21 @@ public class GameEngine {
 			break;
 		}
 	}
+	
+	public void updatePlayableFrogs(){
+		switch(typeDest){
+		case MOSQUITO:
+			break;
+		case WATERLILY:
+			break;
+		default:
+			break;
+		}
+	}
+	
+	public boolean isPlayable(int id){
+		return playableFrogs.contains(id);
+	}
 
 	public void nextPlayer() {
 		boolean tmp = false;
@@ -266,6 +292,9 @@ public class GameEngine {
 			f.updateStuckTime();
 		}
 		getPlayer(pToken).activeFrogs();
+		
+
+		cPlayer = getPlayer(pToken);
 	}
 
 	public void initPlayerRound(){
@@ -315,12 +344,12 @@ public class GameEngine {
 
 		for (Player p : players) {
 			if (p.hasQueen(x, y)) {
-				occ.addOccupant(p.getId(), true, p.getQueen().isStuck());
+				occ.addOccupant(p.getId(), p.getQueen());
 			}
 
 			for (Frog f : p.getMaids()) {
 				if (f.isThere(x, y)) {
-					occ.addOccupant(p.getId(), false, f.isStuck());
+					occ.addOccupant(p.getId(), f);
 				}
 			}
 		}
@@ -333,12 +362,12 @@ public class GameEngine {
 
 		Player p = players.get(id);
 		if (p.hasQueen(x, y)) {
-			occ.addOccupant(p.getId(), true, p.getQueen().isStuck());
+			occ.addOccupant(p.getId(), p.getQueen());
 		}
 
 		for (Frog f : p.getMaids()) {
 			if (f.getxPos() == x && f.getyPos() == y) {
-				occ.addOccupant(p.getId(), false, f.isStuck());
+				occ.addOccupant(p.getId(), f);
 			}
 		}
 

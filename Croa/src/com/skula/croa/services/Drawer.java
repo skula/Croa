@@ -1,5 +1,7 @@
 package com.skula.croa.services;
 
+import java.io.ObjectInputStream.GetField;
+
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +10,7 @@ import android.graphics.Rect;
 import com.skula.croa.R;
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.constants.PictureLibrary;
+import com.skula.croa.enums.FrogRank;
 import com.skula.croa.models.Frog;
 import com.skula.croa.models.Tile;
 import com.skula.croa.models.TileOccupants;
@@ -23,20 +26,13 @@ public class Drawer {
 		this.lib = new PictureLibrary(res);
 	}
 
-	public void draw(Canvas c) {
-		drawTiles(c);
-		drawActiveFrogs(c);
-		drawFrogs(c);
-		drawScores(c);
-	}
-	
-	private void drawScores(Canvas c) {
+	public void drawScores(Canvas c) {
 		// nombre de grenouilles restante
 		// males restant
 		// tombe (si reine morte)
 	}
 
-	private void drawActiveFrogs(Canvas c) {
+	public void drawActiveFrogs(Canvas c) {
 		int token = engine.getToken();
 		Rect r  = null;
 		for(Frog f : engine.getPlayer(token).getMaids()){
@@ -55,14 +51,14 @@ public class Drawer {
 		}
 	}
 	
-	private void drawFrogs(Canvas c) {
-		TileOccupants occ = null;
+	public void drawFrogs(Canvas c) {
+		/*TileOccupants occ = null;
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
 				occ = engine.getTileOccupants(j, i);
 				int id = 0;
 				if (occ.getCount() == 1) {
-					if(occ.isFrog1queen()){
+					if(occ.getFrog1().getRank().equals(FrogRank.QUEEN)){
 						id = Cnst.getQueenPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
 					}else{
 						id = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
@@ -94,10 +90,10 @@ public class Drawer {
 									 Cnst.X0 + 20 + Cnst.FROG_WIDTH + j * Cnst.TILE_SIZE, Cnst.Y0 + 10 + Cnst.FROG_HEIGHT + i * Cnst.TILE_SIZE), paint);
 				}
 			}
-		}
+		}*/
 	}
 
-	private void drawTiles(Canvas c) {
+	public void drawTiles(Canvas c) {
 		Tile[][] tiles = engine.getTiles();
 
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
