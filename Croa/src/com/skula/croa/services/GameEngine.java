@@ -31,18 +31,17 @@ public class GameEngine {
 
 	public GameEngine(int nPlayers) {
 		this.nPlayers = nPlayers;
-		this.pToken = 0;
 		this.players = new ArrayList<Player>();
+		this.pToken = 0;
 		this.selFrog = null;
 		clearSrcPosition();
 		clearDestPosition();
-
 		positionTiles();
-
 		positionFrogs();
+		cPlayer = getPlayer(pToken);
+		playableFrogs = new ArrayList<Integer>();
 		updatePlayableFrogs(TileType.NONE);
 
-		cPlayer = getPlayer(pToken);
 	}
 
 	public boolean canSelectFrog(int x, int y) {
