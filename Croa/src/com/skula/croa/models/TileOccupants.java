@@ -31,6 +31,21 @@ public class TileOccupants {
 
 		count ++;
 	}
+	
+	public boolean isQueenAndMaid(int id){
+		if(count!=2){
+			return false;
+		}		
+		return frog1Id == frog2Id && frog1Id == id;
+	}
+	
+	public Frog getFrogByPlayerId(int id){
+		if(frog1Id == id){
+			return frog1;
+		}else{
+			return frog2Id == id? frog2 : null;
+		}
+	}
 
 	public int getCount() {
 		return count;

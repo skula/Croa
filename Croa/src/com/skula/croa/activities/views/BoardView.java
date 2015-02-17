@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.skula.croa.constants.Cnst;
+import com.skula.croa.models.Frog;
 import com.skula.croa.models.TileOccupants;
 import com.skula.croa.services.Drawer;
 import com.skula.croa.services.GameEngine;
@@ -16,9 +17,8 @@ import com.skula.croa.services.GameEngine;
 public class BoardView extends View {
 	private Drawer drawer;
 	private GameEngine engine;
-	
+
 	private Position position;
-	
 	private boolean dualSelect;
 
 	public BoardView(Context context, int nPlayers) {
@@ -40,22 +40,39 @@ public class BoardView extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			// si deux grenouilles sur la mm case
+			// si deux grenouilles sur la mm case: queen/maid ou 2 maid differentes
 			if(dualSelect){
 				int choice = getChoice(x, y);
-			// si une grenouilles sur la case
-			}else{
-				Position p = getTile(x, y);
-				if(!p.isUndefined()){
-					if(!engine.isSrcSelected()){
-						if(engine.canSrcSelect(position.getX(), position.getY())){
-							TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
-							
-							
+				if(choice==-1){
+					return true;
+				}
+
+				// TODO:...
+				engine.setSrcPos(position.getX(), position.getY());
+				engine.setFrogId(choice);
+				dualSelect = false;		
+				return true;
+			}
+			
+			Position p = getTile(x, y);
+			if(!p.isUndefined()){
+				position = p;
+				if(!engine.isSrcSelected()){
+					if(engine.canSrcSelect(p.getX(), p.getY())){
+						TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
+						if(occ.isQueenAndMaid(engine.getToken())){
+							dualSelect = true;
+						}else{
+							engine.setSrcPos(p.getX(), p.getY());
+							Frog f = occ.getFrogByPlayerId(engine.getToken());
+							engine.setFrogId(f.getId());
 						}
 					}
-				}			
-			}
+				}else{
+				
+				}
+			}			
+			
 			invalidate();
 			break;
 		}		

@@ -28,6 +28,7 @@ public class GameEngine {
 	private boolean updateFrogsActivity;
 	private TileType typeDest;
 	
+	private int frogId;
 	private List<Integer> playableFrogs;
 
 	public GameEngine(int nPlayers) {
@@ -37,6 +38,7 @@ public class GameEngine {
 		this.isQueenSel = false;
 		this.updateFrogsActivity = true;
 		this.typeDest = TileType.NONE;
+		this.frogId = -1;
 		clearSrcPosition();
 		clearDestPosition();
 		
@@ -50,11 +52,9 @@ public class GameEngine {
 	
 	public boolean canSrcSelect(int x, int y){
 		Frog f = cPlayer.getMaid(x, y);
-		if(f!=null){
-			return true;
-		}else{
-			return cPlayer.hasQueen(x, y) && isPlayable(cPlayer.getQueen().getId());
-		}
+		boolean resM = f!=null && isPlayable(f.getId()); 
+		boolean resQ = cPlayer.hasQueen(x, y) && isPlayable(cPlayer.getQueen().getId());
+		return resM || resQ;
 	}
 
 	// POUR L'INSTANT: une et une seule grenouille par tuile maximum !!!!!
@@ -536,5 +536,13 @@ public class GameEngine {
 
 	public int getToken() {
 		return pToken;
+	}
+
+	public int getFrogId() {
+		return frogId;
+	}
+
+	public void setFrogId(int frogId) {
+		this.frogId = frogId;
 	}
 }
