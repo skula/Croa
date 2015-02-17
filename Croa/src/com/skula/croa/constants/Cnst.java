@@ -4,6 +4,7 @@ import com.skula.croa.R;
 
 
 
+
 public class Cnst {
 	// damier
 	public static final int COLUMNS_COUNT = 8;

@@ -40,7 +40,7 @@ public class BoardView extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			// si deux grenouilles sur la mm case: queen/maid ou 2 maid differentes
+			// Gestion sélection d'une tuile à 2 grenouille
 			if(dualSelect){
 				int choice = getChoice(x, y);
 				if(choice==-1){
@@ -49,29 +49,36 @@ public class BoardView extends View {
 
 				// TODO:...
 				engine.setSrcPos(position.getX(), position.getY());
-				engine.setFrogId(choice);
+				engine.setSelFrog(choice);
 				dualSelect = false;		
+				invalidate();
 				return true;
 			}
 			
 			Position p = getTile(x, y);
-			if(!p.isUndefined()){
-				position = p;
-				if(!engine.isSrcSelected()){
-					if(engine.canSrcSelect(p.getX(), p.getY())){
-						TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
-						if(occ.isQueenAndMaid(engine.getToken())){
-							dualSelect = true;
-						}else{
-							engine.setSrcPos(p.getX(), p.getY());
-							Frog f = occ.getFrogByPlayerId(engine.getToken());
-							engine.setFrogId(f.getId());
-						}
+			if(p.isUndefined()){
+				return true;
+			}
+			position = p;
+			
+			if(!engine.isSrcSelected()){
+				if(engine.canSelectFrog(p.getX(), p.getY())){
+					TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
+					if(occ.isQueenAndMaid(engine.getToken())){
+						dualSelect = true;
+					}else{
+						engine.setSrcPos(p.getX(), p.getY());
+						Frog f = occ.getFrogByPlayerId(engine.getToken());
+						engine.setSelFrog(f.getId());
 					}
 				}else{
+					return true;
+				}
+			}else{
+				if(engine.canProcess(p.getX(), p.getY())){
 				
 				}
-			}			
+			}
 			
 			invalidate();
 			break;
@@ -91,6 +98,7 @@ public class BoardView extends View {
 	}
 	
 	private int getChoice(int x, int y) {	
+		TileOccupants occ = engine.getTileOccupants(position.getX(), position.getY());
 		return -1;
 	}
 
@@ -100,6 +108,10 @@ public class BoardView extends View {
 		drawer.drawActiveFrogs(canvas);
 		drawer.drawFrogs(canvas);
 		drawer.drawScores(canvas);
+		
+		if(dualSelect){
+			drawer.drawDualSelect(canvas, engine.getTileOccupants(position.getX(), position.getY()));
+		}
 		
 		Paint p = new Paint();
 		p.setColor(Color.RED);

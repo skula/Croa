@@ -46,6 +46,10 @@ public class Frog {
 		}
 	}
 	
+	public boolean isQueen(){
+		return rank.equals(FrogRank.QUEEN);
+	}
+	
 	public void setStuck(){
 		stuckTime = 2;
 	}

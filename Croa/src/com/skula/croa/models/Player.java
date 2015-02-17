@@ -32,6 +32,13 @@ public class Player {
 		this.maidsLeft = Cnst.FROGS_COUNT;
 		this.dead = false;
 	}
+	
+	public void updateStuckTime(){
+		queen.updateStuckTime();
+		for (Frog f :maids) {
+			f.updateStuckTime();
+		}
+	}
 
 	public void addMaid(int x, int y) {
 		maids.add(new Frog(x, y, FrogRank.MAID));
@@ -45,7 +52,11 @@ public class Player {
 	public void setQueen(int x, int y) {
 		queen = new Frog(x, y, FrogRank.QUEEN);
 	}
-
+	
+	public boolean hasFrog(int x, int y){
+		return hasQueen(x,y) || hasMaid(x, y);
+	}
+	
 	public boolean hasMaid(int x, int y) {
 		for (Frog f : maids) {
 			if (f.getxPos() == x && f.getyPos() == y) {
@@ -55,7 +66,7 @@ public class Player {
 		return false;
 	}
 
-	public int getWeigth(int x, int y) {
+	public int getFrogsWeigth(int x, int y) {
 		if (hasQueen(x, y)) {
 			return 2;
 		}

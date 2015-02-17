@@ -2,48 +2,43 @@ package com.skula.croa.models;
 
 public class TileOccupants {
 	private int count;
-	
-	private int frog1Id;
-	private int frog2Id;
+	private int frog1pId;
+	private int frog2pId;
 	private Frog frog1;
 	private Frog frog2;
 	
-	public static void main(String[] args) {
-
-	}
-
-	public TileOccupants(){
+	public TileOccupants() {
 		this.count = 0;
 	}
-	
-	public void addOccupant(int id, Frog frog){
-		if(count==2){
+
+	public void addOccupant(int id, Frog frog) {
+		if (count == 2) {
 			return;
 		}
-		
-		if(count==0){
-			frog1Id = id;
+
+		if (count == 0) {
+			frog1pId = id;
 			frog1 = frog;
-		}else if( count == 1){
-			frog2Id = id;
+		} else if (count == 1) {
+			frog2pId = id;
 			frog2 = frog;
 		}
 
-		count ++;
+		count++;
 	}
-	
-	public boolean isQueenAndMaid(int id){
-		if(count!=2){
+
+	public boolean isQueenAndMaid(int playerId) {
+		if (count != 2) {
 			return false;
-		}		
-		return frog1Id == frog2Id && frog1Id == id;
+		}
+		return frog1pId == frog2pId && frog1pId == playerId;
 	}
-	
-	public Frog getFrogByPlayerId(int id){
-		if(frog1Id == id){
+
+	public Frog getFrogByPlayerId(int playerId) {
+		if (frog1pId == playerId) {
 			return frog1;
-		}else{
-			return frog2Id == id? frog2 : null;
+		} else {
+			return frog2pId == playerId ? frog2 : null;
 		}
 	}
 
@@ -55,20 +50,20 @@ public class TileOccupants {
 		this.count = count;
 	}
 
-	public int getFrog1Id() {
-		return frog1Id;
+	public int getFrog1pId() {
+		return frog1pId;
 	}
 
-	public void setFrog1Id(int frog1Id) {
-		this.frog1Id = frog1Id;
+	public void setFrog1pId(int frog1Id) {
+		this.frog1pId = frog1Id;
 	}
 
-	public int getFrog2Id() {
-		return frog2Id;
+	public int getFrog2pId() {
+		return frog2pId;
 	}
 
-	public void setFrog2Id(int frog2Id) {
-		this.frog2Id = frog2Id;
+	public void setFrog2pId(int frog2Id) {
+		this.frog2pId = frog2Id;
 	}
 
 	public Frog getFrog1() {
@@ -86,6 +81,4 @@ public class TileOccupants {
 	public void setFrog2(Frog frog2) {
 		this.frog2 = frog2;
 	}
-	
-	
 }

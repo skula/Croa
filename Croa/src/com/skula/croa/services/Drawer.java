@@ -1,9 +1,8 @@
 package com.skula.croa.services;
 
-import java.io.ObjectInputStream.GetField;
-
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -31,6 +30,32 @@ public class Drawer {
 		// males restant
 		// tombe (si reine morte)
 	}
+	
+	public void drawDualSelect(Canvas c, TileOccupants occ){
+		paint.setColor(Color.BLACK);
+		int x0 = Cnst.X0 + Cnst.TILE_SIZE;
+		int y0 = Cnst.Y0 + Cnst.TILE_SIZE * 3;
+		c.drawRect(new Rect(x0, y0, x0 + Cnst.TILE_SIZE * 2, y0 + Cnst.TILE_SIZE * 2), paint);
+		
+		int id1 = 0;
+		int id2 = 0;
+		if(occ.getFrog1().isQueen()){
+			id1 = Cnst.getQueenPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
+			id2 = Cnst.getMaidPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
+		} else if(occ.getFrog2().isQueen()){
+			id1 = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
+			id2 = Cnst.getQueenPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
+		} else {
+			id1 = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
+			id2 = Cnst.getMaidPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
+		}
+		
+		c.drawBitmap(lib.get(id1), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+				new Rect(x0, y0, x0 + Cnst.FROG_WIDTH, y0 + Cnst.FROG_HEIGHT), paint);
+		x0 += Cnst.TILE_SIZE + 10;
+		c.drawBitmap(lib.get(id2), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
+				new Rect(x0, y0, x0 + Cnst.FROG_WIDTH, y0 + Cnst.FROG_HEIGHT), paint);
+	}
 
 	public void drawActiveFrogs(Canvas c) {
 		int token = engine.getToken();
@@ -52,16 +77,16 @@ public class Drawer {
 	}
 	
 	public void drawFrogs(Canvas c) {
-		/*TileOccupants occ = null;
+		TileOccupants occ = null;
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
 				occ = engine.getTileOccupants(j, i);
 				int id = 0;
 				if (occ.getCount() == 1) {
 					if(occ.getFrog1().getRank().equals(FrogRank.QUEEN)){
-						id = Cnst.getQueenPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
+						id = Cnst.getQueenPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
 					}else{
-						id = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
+						id = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
 					}
 					
 					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
@@ -71,15 +96,15 @@ public class Drawer {
 				} else if (occ.getCount() == 2) {
 					int id1 = 0;
 					int id2 = 0;
-					if(occ.isFrog1queen()){
-						id1 = Cnst.getMaidPictId(occ.getFrog2Id(), occ.isFrog2Stuck());
-						id2 = Cnst.getQueenPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
-					} else if(occ.isFrog2queen()){
-						id1 = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
-						id2 = Cnst.getQueenPictId(occ.getFrog2Id(), occ.isFrog2Stuck());
+					if(occ.getFrog1().getRank().equals(FrogRank.QUEEN)){
+						id1 = Cnst.getMaidPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
+						id2 = Cnst.getQueenPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
+					} else if(occ.getFrog2().getRank().equals(FrogRank.QUEEN)){
+						id1 = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
+						id2 = Cnst.getQueenPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
 					} else {
-						id1 = Cnst.getMaidPictId(occ.getFrog1Id(), occ.isFrog1Stuck());
-						id2 = Cnst.getMaidPictId(occ.getFrog2Id(), occ.isFrog2Stuck());
+						id1 = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
+						id2 = Cnst.getMaidPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
 					}
 					
 					c.drawBitmap(lib.get(id1), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
@@ -90,7 +115,7 @@ public class Drawer {
 									 Cnst.X0 + 20 + Cnst.FROG_WIDTH + j * Cnst.TILE_SIZE, Cnst.Y0 + 10 + Cnst.FROG_HEIGHT + i * Cnst.TILE_SIZE), paint);
 				}
 			}
-		}*/
+		}
 	}
 
 	public void drawTiles(Canvas c) {
