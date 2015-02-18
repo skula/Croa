@@ -92,14 +92,7 @@ public class GameEngine {
 
 	public void process() {
 		tiles[xDest][yDest].setHidden(false);
-		
-		// deplacement
-		/*if (selFrog.isQueen()) {
-			cPlayer.getQueen().moveTo(xDest, yDest);
-		} else {
-			cPlayer.getFrog(id)(selFrog.getId()).moveTo(xDest, yDest);
-		}*/
-		
+	
 		// mange un enemi
 		TileOccupants occ = getTileOccupants(xDest, yDest);
 		if (tiles[xDest][yDest].getType().equals(TileType.WOODLOG)) {
@@ -119,7 +112,7 @@ public class GameEngine {
 			}
 		}
 		
-
+		// deplacement
 		cPlayer.getFrog(selFrog.getId()).moveTo(xDest, yDest);
 
 		// execute le pouvoir de la tuile
