@@ -59,7 +59,7 @@ public class GameEngine {
 		}
 
 		// clique sur la meme case: deselection
-		if (xDest == xSrc && x == y) {
+		if (x == xSrc && y == ySrc) {
 			return false;
 		}
 
@@ -80,7 +80,7 @@ public class GameEngine {
 				return false;
 			}
 		} else {
-			if (canMaidMove(xDest, yDest)) {
+			if (canMaidMove(x, y)) {
 				xDest = x;
 				yDest = y;
 				return true;
@@ -94,12 +94,12 @@ public class GameEngine {
 		tiles[xDest][yDest].setHidden(false);
 		
 		// deplacement
-		if (selFrog.isQueen()) {
+		/*if (selFrog.isQueen()) {
 			cPlayer.getQueen().moveTo(xDest, yDest);
 		} else {
-			cPlayer.getMaid(xSrc, ySrc).moveTo(xDest, yDest);
-		}
-
+			cPlayer.getFrog(id)(selFrog.getId()).moveTo(xDest, yDest);
+		}*/
+		
 		// mange un enemi
 		TileOccupants occ = getTileOccupants(xDest, yDest);
 		if (tiles[xDest][yDest].getType().equals(TileType.WOODLOG)) {
@@ -118,6 +118,9 @@ public class GameEngine {
 				}
 			}
 		}
+		
+
+		cPlayer.getFrog(selFrog.getId()).moveTo(xDest, yDest);
 
 		// execute le pouvoir de la tuile
 		switch (tiles[xDest][yDest].getType()) {

@@ -75,7 +75,7 @@ public class BoardView extends View {
 				}
 			}else{
 				if(engine.canProcess(p.getX(), p.getY())){
-				
+					engine.process();
 				}
 			}
 			
