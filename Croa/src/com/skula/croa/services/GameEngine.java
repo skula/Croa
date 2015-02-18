@@ -179,14 +179,15 @@ public class GameEngine {
 		case MOSQUITO:
 			playableFrogs.clear();
 			for (Frog f : cPlayer.getMaids()) {
-				if (!f.isStuck()) {
+				if (!f.isStuck() && f.getId() != selFrog.getId()) {
 					playableFrogs.add(f.getId());
 				}
 			}
-			if (!cPlayer.getQueen().isStuck()) {
+			if (!cPlayer.getQueen().isStuck() && cPlayer.getQueen().getId() != selFrog.getId()) {
 				playableFrogs.add(cPlayer.getQueen().getId());
 			}
-			playableFrogs.remove(selFrog.getId());
+			activePlayableFrogs();
+			//playableFrogs.remove(Integer.valueOf(selFrog.getId()));
 			break;
 		case WATERLILY:
 			playableFrogs.clear();
@@ -206,10 +207,11 @@ public class GameEngine {
 		}
 	}
 
-	public void activePlayableFrogs(){
-		for(Integer i : playableFrogs){
-			cPlayer.getFrog(i).setActive(true);
+	public void activePlayableFrogs(){		
+		for(Frog f : cPlayer.getMaids()){
+			f.setActive(playableFrogs.contains(f.getId()));
 		}
+		cPlayer.getQueen().setActive(playableFrogs.contains(cPlayer.getQueen().getId()));
 	}
 	
 	private boolean isPlayable(int id) {
