@@ -15,12 +15,6 @@ public class Tile {
 
 	private Male maleId;
 
-	public static void main(String[] args) {
-		List<Tile> tiles = getAllTiles();
-		Collections.shuffle(tiles);
-		System.out.println(tiles.size());
-	}
-
 	public Tile(TileType type, TileBackType backType, Male maleId, int spaceLeft) {
 		this.type = type;
 		this.backType = backType;

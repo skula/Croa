@@ -113,13 +113,13 @@ public class BoardView extends View {
 			drawer.drawDualSelect(canvas, engine.getTileOccupants(position.getX(), position.getY()));
 		}
 		
-		Paint p = new Paint();
+		/*Paint p = new Paint();
 		p.setColor(Color.RED);
 		p.setTextSize(20f);
 		
 		if(position!=null){
 			canvas.drawText("(i=" + position.getX() + ", j:" + position.getY() + ")", 20, 20, p);
-		}
+		}*/
 	}
 	
 	

@@ -62,17 +62,19 @@ public class GameEngine {
 	public boolean canProcess(int x, int y) {
 		// si pas une case adjacente
 		if (!Tile.areTilesAdjacent(xSrc, ySrc, x, y)) {
-			activePlayableFrogs();
+			//clearSrcPosition();
+			//activePlayableFrogs();
 			return false;
 		}
 
 		// clique sur la meme case: deselection
 		if (x == xSrc && y == ySrc) {
+			clearSrcPosition();
 			activePlayableFrogs();
 			return false;
 		}
 
-		// si tuile encore cachée
+		// si tuile encore cachee
 		if (tiles[x][y].isHidden()) {
 			xDest = x;
 			yDest = y;
