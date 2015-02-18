@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.models.Frog;
+import com.skula.croa.models.Position;
 import com.skula.croa.models.TileOccupants;
 import com.skula.croa.services.Drawer;
 import com.skula.croa.services.GameEngine;
@@ -121,33 +122,5 @@ public class BoardView extends View {
 		}
 	}
 	
-	public class Position{
-		private int x;
-		private int y;
-		
-		public Position(int x, int y){
-			this.x = x;
-			this.y = y;
-		}
-		
-		public boolean isUndefined(){
-			return x==-1 || y==-1;
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setY(int y) {
-			this.y = y;
-		}
-	}
+	
 }

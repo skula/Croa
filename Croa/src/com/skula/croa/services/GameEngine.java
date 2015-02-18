@@ -10,6 +10,7 @@ import com.skula.croa.enums.TileBackType;
 import com.skula.croa.enums.TileType;
 import com.skula.croa.models.Frog;
 import com.skula.croa.models.Player;
+import com.skula.croa.models.Position;
 import com.skula.croa.models.Tile;
 import com.skula.croa.models.TileOccupants;
 
@@ -33,15 +34,16 @@ public class GameEngine {
 		this.nPlayers = nPlayers;
 		this.players = new ArrayList<Player>();
 		this.pToken = 0;
-		this.selFrog = null;
+		this.selFrog = null;		
 		clearSrcPosition();
 		clearDestPosition();
+		
 		positionTiles();
 		positionFrogs();
+		
 		cPlayer = getPlayer(pToken);
 		playableFrogs = new ArrayList<Integer>();
 		updatePlayableFrogs(TileType.NONE);
-
 	}
 
 	public boolean canSelectFrog(int x, int y) {
@@ -49,21 +51,28 @@ public class GameEngine {
 		boolean resM = f != null && isPlayable(f.getId());
 		boolean resQ = cPlayer.hasQueen(x, y)
 				&& isPlayable(cPlayer.getQueen().getId());
-		return resM || resQ;
+		if(resM || resQ){
+			return true;
+		} else{
+			activePlayableFrogs();
+			return false;
+		}
 	}
 
 	public boolean canProcess(int x, int y) {
 		// si pas une case adjacente
 		if (!Tile.areTilesAdjacent(xSrc, ySrc, x, y)) {
+			activePlayableFrogs();
 			return false;
 		}
 
 		// clique sur la meme case: deselection
 		if (x == xSrc && y == ySrc) {
+			activePlayableFrogs();
 			return false;
 		}
 
-		// si tuile encore cachée
+		// si tuile encore cachÃ©e
 		if (tiles[x][y].isHidden()) {
 			xDest = x;
 			yDest = y;
@@ -77,6 +86,7 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
+				activePlayableFrogs();
 				return false;
 			}
 		} else {
@@ -85,6 +95,7 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
+				activePlayableFrogs();
 				return false;
 			}
 		}
@@ -97,9 +108,9 @@ public class GameEngine {
 		TileOccupants occ = getTileOccupants(xDest, yDest);
 		if (tiles[xDest][yDest].getType().equals(TileType.WOODLOG)) {
 			if (selFrog.isQueen()) {
-				
+				// TODO
 			}else{
-				
+				// TODO
 			}
 		} else {
 			if(occ.getCount()>0){
@@ -120,6 +131,7 @@ public class GameEngine {
 		case MOSQUITO:
 			//getPlayer(pToken).activeFrogsBut(xDest, yDest, isQueenSel);
 			updatePlayableFrogs(TileType.MOSQUITO);
+			activePlayableFrogs();
 			clearSrcPosition();
 			clearDestPosition();
 			break;
@@ -194,6 +206,12 @@ public class GameEngine {
 		}
 	}
 
+	public void activePlayableFrogs(){
+		for(Integer i : playableFrogs){
+			cPlayer.getFrog(i).setActive(true);
+		}
+	}
+	
 	private boolean isPlayable(int id) {
 		return playableFrogs.contains(id);
 	}
@@ -216,7 +234,14 @@ public class GameEngine {
 		cPlayer = getPlayer(pToken);
 
 		cPlayer.updateStuckTime();
-		updatePlayableFrogs(TileType.NONE);
+		
+		Position p = cPlayer.isQueenAndMaidOnOneTile();
+		if(p!=null){
+			// TODO: !!! cas a traiter: une reine et une maid sur la mm case jouent obligatoirement !!!
+		}else{
+			updatePlayableFrogs(TileType.NONE);
+			activePlayableFrogs();
+		}
 	}
 
 	public boolean canReproduce(Male maleId) {
@@ -463,9 +488,11 @@ public class GameEngine {
 
 	public void setSelFrog(int id) {
 		this.selFrog = cPlayer.getFrog(id);
+		cPlayer.desactiveFrogsBut(id);
 	}
 
 	public void setSelFrog(Frog frog) {
 		this.selFrog = selFrog;
+		cPlayer.desactiveFrogsBut(frog.getId());
 	}
 }

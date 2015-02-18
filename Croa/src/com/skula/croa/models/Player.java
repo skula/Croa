@@ -14,11 +14,7 @@ public class Player {
 	private List<Male> malesLeft;
 	private int maidsLeft;
 	private boolean dead;
-
-	public static void main(String[] args) {
-
-	}
-
+	
 	public Player(int id) {
 		this.id = id;
 		this.malesLeft = new ArrayList<Male>();
@@ -31,6 +27,15 @@ public class Player {
 		this.maids = new ArrayList<Frog>();
 		this.maidsLeft = Cnst.FROGS_COUNT;
 		this.dead = false;
+	}
+	
+	public Position isQueenAndMaidOnOneTile(){
+		for(Frog f : maids){
+			if(f.getxPos()==queen.getxPos() && f.getyPos()==queen.getyPos()){
+				return new Position(f.getxPos(), f.getyPos());
+			}
+		}
+		return null;
 	}
 	
 	public void updateStuckTime(){
@@ -116,6 +121,24 @@ public class Player {
 			queen.setActive(false);
 			for(Frog f : maids){
 				if(f.isThere(x, y)){
+					f.setActive(!f.isStuck());
+				}else{
+					f.setActive(false);
+				}
+			}
+		}
+	}
+	
+	public void desactiveFrogsBut(int id){
+		if(queen.getId() == id){
+			queen.setActive(!queen.isStuck());
+			for(Frog f : maids){
+				f.setActive(false);
+			}
+		}else{
+			queen.setActive(false);
+			for(Frog f : maids){
+				if(f.getId() == id){
 					f.setActive(!f.isStuck());
 				}else{
 					f.setActive(false);
