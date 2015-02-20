@@ -51,6 +51,7 @@ public class BoardView extends View {
 				engine.setSrcPos(position.getX(), position.getY());
 				engine.setSelFrog(choice);
 				dualSelect = false;		
+
 				invalidate();
 				return true;
 			}

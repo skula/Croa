@@ -32,10 +32,10 @@ public class Drawer {
 	}
 	
 	public void drawDualSelect(Canvas c, TileOccupants occ){
-		paint.setColor(Color.BLACK);
-		int x0 = Cnst.X0 + Cnst.TILE_SIZE;
-		int y0 = Cnst.Y0 + Cnst.TILE_SIZE * 3;
-		c.drawRect(new Rect(x0, y0, x0 + Cnst.TILE_SIZE * 2, y0 + Cnst.TILE_SIZE * 2), paint);
+		paint.setColor(Color.DKGRAY);
+		int x0 = (int)(Cnst.X0 + Cnst.TILE_SIZE*8.5);
+		int y0 = (int)(Cnst.Y0 + Cnst.TILE_SIZE * 3.5);
+		c.drawRect(new Rect(x0, y0, x0 + Cnst.TILE_SIZE * 2, y0 + Cnst.TILE_SIZE), paint);
 		
 		int id1 = 0;
 		int id2 = 0;
@@ -59,6 +59,10 @@ public class Drawer {
 
 	public void drawActiveFrogs(Canvas c) {
 		int token = engine.getToken();
+		if(engine.getPlayer(token).isDead()){
+			return;
+		}
+		
 		Rect r  = null;
 		for(Frog f : engine.getPlayer(token).getMaids()){
 			if(f.isActive()){
@@ -83,7 +87,10 @@ public class Drawer {
 				occ = engine.getTileOccupants(j, i);
 				int id = 0;
 				if (occ.getCount() == 1) {
-					if(occ.getFrog1().getRank().equals(FrogRank.QUEEN)){
+					if(engine.getPlayer(occ.getFrog1pId()).isDead()){
+						continue;
+					}
+					if(occ.getFrog1().isQueen()){
 						id = Cnst.getQueenPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
 					}else{
 						id = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
@@ -96,10 +103,10 @@ public class Drawer {
 				} else if (occ.getCount() == 2) {
 					int id1 = 0;
 					int id2 = 0;
-					if(occ.getFrog1().getRank().equals(FrogRank.QUEEN)){
+					if(occ.getFrog1().isQueen()){
 						id1 = Cnst.getMaidPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
 						id2 = Cnst.getQueenPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
-					} else if(occ.getFrog2().getRank().equals(FrogRank.QUEEN)){
+					} else if(occ.getFrog2().isQueen()){
 						id1 = Cnst.getMaidPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
 						id2 = Cnst.getQueenPictId(occ.getFrog2pId(), occ.getFrog2().isStuck());
 					} else {

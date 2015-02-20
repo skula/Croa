@@ -187,6 +187,11 @@ public class Player {
 		}
 		return null;
 	}
+	
+	public void eaten() {
+		maids.clear();
+		this.dead = dead;
+	}
 
 	public void setMaids(List<Frog> maids) {
 		this.maids = maids;
@@ -214,10 +219,6 @@ public class Player {
 
 	public boolean isDead() {
 		return dead;
-	}
-
-	public void setDead(boolean dead) {
-		this.dead = dead;
 	}
 
 	public void setMaidsLeft(int maidsLeft) {
