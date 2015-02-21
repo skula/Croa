@@ -41,6 +41,20 @@ public class TileOccupants {
 			return frog2pId == playerId ? frog2 : null;
 		}
 	}
+	
+	public int getWeight(){
+		if(count==0){
+			return 0;
+		}
+		if(count==1){
+			return frog1.isQueen()?2:1;
+		}else{
+			int res = 0;
+			res +=frog1.isQueen()?2:1;
+			res +=frog2.isQueen()?2:1;
+			return res;
+		}
+	}
 
 	public int getCount() {
 		return count;

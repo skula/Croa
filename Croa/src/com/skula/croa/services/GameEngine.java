@@ -86,8 +86,7 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
-				clearSrcPosition();
-				activePlayableFrogs();
+				//activePlayableFrogs();
 				return false;
 			}
 		} else {
@@ -96,8 +95,7 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
-				clearSrcPosition();
-				activePlayableFrogs();
+				//activePlayableFrogs();
 				return false;
 			}
 		}
@@ -273,13 +271,14 @@ public class GameEngine {
 		if (!tiles[x][y].getType().equals(TileType.WOODLOG)) {
 			return !cPlayer.hasFrog(x, y);
 		} else {
-			return cPlayer.getFrogsWeigth(x, y) < 2;
+			TileOccupants occ = getTileOccupants(x, y);
+			return occ.getWeight() < 2;
 		}
 	}
 
 	public boolean canQueenMove(int x, int y) {
 		if (tiles[x][y].getType().equals(TileType.WOODLOG)) {
-			TileOccupants occ = new TileOccupants();
+			TileOccupants occ = getTileOccupants(x, y);
 			if (occ.getCount() == 0) {
 				return true;
 			} else if (occ.getCount() == 1) {
