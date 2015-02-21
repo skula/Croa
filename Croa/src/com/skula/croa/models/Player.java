@@ -52,6 +52,7 @@ public class Player {
 	
 	public void removeMaid(int x, int y) {
 		maids.remove(getMaid(x,y));
+		maidsLeft++;
 	}
 
 	public void setQueen(int x, int y) {

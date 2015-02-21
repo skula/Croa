@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -47,7 +48,6 @@ public class BoardView extends View {
 					return true;
 				}
 
-				// TODO:...
 				engine.setSrcPos(position.getX(), position.getY());
 				engine.setSelFrog(choice);
 				dualSelect = false;		
@@ -99,7 +99,19 @@ public class BoardView extends View {
 	}
 	
 	private int getChoice(int x, int y) {	
+		int x0 = (int)(Cnst.X0 + Cnst.TILE_SIZE*8.5);
+		int y0 = (int)(Cnst.Y0 + Cnst.TILE_SIZE * 3.5);
 		TileOccupants occ = engine.getTileOccupants(position.getX(), position.getY());
+		
+		Rect r = new Rect(x0, y0, x0 + Cnst.FROG_WIDTH, y0 + Cnst.FROG_HEIGHT);
+		if(r.contains(x,y)){
+			return occ.getFrog1().getId();
+		}
+		
+		r = new Rect(x0, y0, x0 + Cnst.FROG_WIDTH, y0 + Cnst.FROG_HEIGHT);
+		if(r.contains(x,y)){
+			return occ.getFrog2().getId();
+		}
 		return -1;
 	}
 

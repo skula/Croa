@@ -263,8 +263,8 @@ public class GameEngine {
 	}
 
 	public void reproduce(Male maleId) {
-		getPlayer(pToken).getMalesLeft().remove(maleId);
-		getPlayer(pToken).addMaid(xDest, yDest);
+		cPlayer.getMalesLeft().remove(maleId);
+		cPlayer.addMaid(xDest, yDest);
 	}
 
 	public boolean canMaidMove(int x, int y) {

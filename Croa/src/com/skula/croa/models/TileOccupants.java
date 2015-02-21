@@ -31,7 +31,11 @@ public class TileOccupants {
 		if (count != 2) {
 			return false;
 		}
-		return frog1pId == frog2pId && frog1pId == playerId;
+		if(frog1pId == frog2pId && frog1pId == playerId){
+
+			return frog1.isQueen() || frog2.isQueen();
+		}
+		return false;
 	}
 
 	public Frog getFrogByPlayerId(int playerId) {
