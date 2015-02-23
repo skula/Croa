@@ -97,8 +97,8 @@ public class Drawer {
 					}
 					
 					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.FROG_WIDTH, Cnst.FROG_HEIGHT),
-								 new Rect(Cnst.X0 + 5 + j * Cnst.TILE_SIZE, Cnst.Y0 + 5 + i * Cnst.TILE_SIZE , 
-										  Cnst.X0 + 5 + j * Cnst.TILE_SIZE + Cnst.FROG_WIDTH , Cnst.Y0 + 5 + i * Cnst.TILE_SIZE +  Cnst.FROG_HEIGHT) , 
+								 new Rect(Cnst.X0 + 10 + j * Cnst.TILE_SIZE, Cnst.Y0 + 10 + i * Cnst.TILE_SIZE , 
+										  Cnst.X0 + 10 + j * Cnst.TILE_SIZE + Cnst.FROG_WIDTH , Cnst.Y0 + 10 + i * Cnst.TILE_SIZE +  Cnst.FROG_HEIGHT) , 
 								 paint);
 				} else if (occ.getCount() == 2) {
 					int id1 = 0;

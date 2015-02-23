@@ -19,7 +19,7 @@ public class Tile {
 		this.type = type;
 		this.backType = backType;
 		this.maleId = maleId;
-		this.hidden = true;
+		this.hidden = !true;
 	}
 	
 	public static boolean areTilesAdjacent(int xSrc, int ySrc, int xDest, int yDest) {

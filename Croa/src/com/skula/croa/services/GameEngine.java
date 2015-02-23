@@ -139,11 +139,14 @@ public class GameEngine {
 		// execute le pouvoir de la tuile
 		switch (tiles[xDest][yDest].getType()) {
 		case MOSQUITO:
-			//getPlayer(pToken).activeFrogsBut(xDest, yDest, isQueenSel);
-			updatePlayableFrogs(TileType.MOSQUITO);
-			activePlayableFrogs();
-			clearSrcPosition();
-			clearDestPosition();
+			if(cPlayer.getCountPlayableFrogs()>1){
+				updatePlayableFrogs(TileType.MOSQUITO);
+				activePlayableFrogs();
+				clearSrcPosition();
+				clearDestPosition();
+			}else{
+				nextPlayer();
+			}
 			break;
 		case WATERLILY:
 			xSrc = xDest;

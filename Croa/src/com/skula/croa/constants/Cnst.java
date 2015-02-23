@@ -14,8 +14,8 @@ public class Cnst {
 	
 	// pictures
 	public static final int TILE_SIZE = 90;
-	public static final int FROG_WIDTH = 80;
-	public static final int FROG_HEIGHT = 80;
+	public static final int FROG_WIDTH = 60;
+	public static final int FROG_HEIGHT = 60;
 	public static final int QUEEN_SIZE = 90;
 
 	public static final int FROGS_COUNT = 6;

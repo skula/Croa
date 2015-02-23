@@ -85,6 +85,16 @@ public class Player {
 		}
 		return res;
 	}
+	
+	public int getCountPlayableFrogs(){
+		int res = queen.isStuck()?0:1;
+		for (Frog f : maids) {
+			if (!f.isStuck()) {
+				res++;
+			}
+		}
+		return res;
+	}
 
 	public boolean hasQueen(int x, int y) {
 		return queen.getxPos() == x && queen.getyPos() == y;
