@@ -107,7 +107,7 @@ public class BoardView extends View {
 		if(r.contains(x,y)){
 			return occ.getFrog1().getId();
 		}
-		
+		x0 += Cnst.TILE_SIZE + 10;
 		r = new Rect(x0, y0, x0 + Cnst.FROG_WIDTH, y0 + Cnst.FROG_HEIGHT);
 		if(r.contains(x,y)){
 			return occ.getFrog2().getId();

@@ -14,7 +14,7 @@ public class BoardActivity extends Activity {
 		// Bundle bundle = getIntent().getExtras();
 		// String nPlayers = bundle.getString(Cnst.BUNDLE_NAME_PLAYERS_COUNT);
 
-		setContentView(new BoardView(this, 3));
+		setContentView(new BoardView(this, 2));
 	}
 
 }
