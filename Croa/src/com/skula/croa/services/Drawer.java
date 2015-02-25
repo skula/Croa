@@ -9,7 +9,7 @@ import android.graphics.Rect;
 import com.skula.croa.R;
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.constants.PictureLibrary;
-import com.skula.croa.enums.FrogRank;
+import com.skula.croa.enums.Male;
 import com.skula.croa.models.Frog;
 import com.skula.croa.models.Tile;
 import com.skula.croa.models.TileOccupants;
@@ -26,9 +26,64 @@ public class Drawer {
 	}
 
 	public void drawScores(Canvas c) {
-		// nombre de grenouilles restante
-		// males restant
-		// tombe (si reine morte)
+		int np = engine.getnPlayers();
+		paint.setTextSize(30f);
+		
+		// joueur 1	
+		int x = 50;
+		int y = 50;
+		paint.setColor(Color.CYAN);
+		c.drawText("Joueur 1", x, y, paint);
+		y += 20;
+		for(Male m : engine.getPlayer(0).getMalesLeft()){
+			int id = Cnst.getMalePictId(m);
+			c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+						   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
+			x +=25;			
+		}
+		
+		x = 1070;
+		y = 50;
+		// joueur 2
+		paint.setColor(Color.MAGENTA);
+		c.drawText("Joueur 2", x, y, paint);
+		y += 20;
+		for(Male m : engine.getPlayer(1).getMalesLeft()){
+			int id = Cnst.getMalePictId(m);
+			c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+						   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
+			x +=25;			
+		}
+		
+		if(np >= 3){
+			// joueur 3
+			paint.setColor(Color.GREEN);
+			x= 50;
+			y = 650;
+			c.drawText("Joueur 3", x, y, paint);
+			y += 20;
+			for(Male m : engine.getPlayer(2).getMalesLeft()){
+				int id = Cnst.getMalePictId(m);
+				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+							   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
+				x +=25;			
+			}
+		}
+		
+		if(np == 4){
+			// joueur 4
+			paint.setColor(Color.YELLOW);
+			x= 1070;
+			y = 650;
+			c.drawText("Joueur 4", x, y, paint);	
+			y += 20;
+			for(Male m : engine.getPlayer(3).getMalesLeft()){
+				int id = Cnst.getMalePictId(m);
+				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+							   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
+				x +=25;			
+			}		
+		}
 	}
 	
 	public void drawDualSelect(Canvas c, TileOccupants occ){
@@ -59,10 +114,6 @@ public class Drawer {
 
 	public void drawActiveFrogs(Canvas c) {
 		int token = engine.getToken();
-		if(engine.getPlayer(token).isDead()){
-			return;
-		}
-		
 		Rect r  = null;
 		for(Frog f : engine.getPlayer(token).getMaids()){
 			if(f.isActive()){
@@ -87,9 +138,6 @@ public class Drawer {
 				occ = engine.getTileOccupants(j, i);
 				int id = 0;
 				if (occ.getCount() == 1) {
-					if(engine.getPlayer(occ.getFrog1pId()).isDead()){
-						continue;
-					}
 					if(occ.getFrog1().isQueen()){
 						id = Cnst.getQueenPictId(occ.getFrog1pId(), occ.getFrog1().isStuck());
 					}else{

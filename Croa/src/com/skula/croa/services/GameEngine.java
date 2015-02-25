@@ -302,13 +302,15 @@ public class GameEngine {
 		TileOccupants occ = new TileOccupants();
 
 		for (Player p : players) {
-			if (p.hasQueen(x, y)) {
-				occ.addOccupant(p.getId(), p.getQueen());
-			}
+			if(!p.isDead()){
+				if (p.hasQueen(x, y)) {
+					occ.addOccupant(p.getId(), p.getQueen());
+				}
 
-			for (Frog f : p.getMaids()) {
-				if (f.isThere(x, y)) {
-					occ.addOccupant(p.getId(), f);
+				for (Frog f : p.getMaids()) {
+					if (f.isThere(x, y)) {
+						occ.addOccupant(p.getId(), f);
+					}
 				}
 			}
 		}

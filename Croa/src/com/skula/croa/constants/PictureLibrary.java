@@ -49,6 +49,13 @@ public class PictureLibrary{
 		this.map.put(R.drawable.queen_stuck_pink, 		BitmapFactory.decodeResource(res, R.drawable.queen_stuck_pink));
 		this.map.put(R.drawable.queen_stuck_yellow, 		BitmapFactory.decodeResource(res, R.drawable.queen_stuck_yellow));
 		this.map.put(R.drawable.queen_stuck_green, 		BitmapFactory.decodeResource(res, R.drawable.queen_stuck_green));
+		
+		this.map.put(R.drawable.male_spawn_blue, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_blue));
+		this.map.put(R.drawable.male_spawn_green, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_green));
+		this.map.put(R.drawable.male_spawn_pink, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_pink));
+		this.map.put(R.drawable.male_spawn_purple, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_purple));
+		this.map.put(R.drawable.male_spawn_red, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_red));
+		this.map.put(R.drawable.male_spawn_yellow, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_yellow));
 
 		this.map.put(R.drawable.sel, 		BitmapFactory.decodeResource(res, R.drawable.sel));
 	}

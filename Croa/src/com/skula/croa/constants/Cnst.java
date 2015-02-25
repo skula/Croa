@@ -1,6 +1,7 @@
 package com.skula.croa.constants;
 
 import com.skula.croa.R;
+import com.skula.croa.enums.Male;
 
 
 
@@ -17,6 +18,7 @@ public class Cnst {
 	public static final int FROG_WIDTH = 60;
 	public static final int FROG_HEIGHT = 60;
 	public static final int QUEEN_SIZE = 90;
+	public static final int MALE_SPAWN_SIZE = 20;
 
 	public static final int FROGS_COUNT = 6;
 
@@ -48,6 +50,25 @@ public class Cnst {
 			return stuck?R.drawable.queen_stuck_green:R.drawable.queen_green;
 		case 3:
 			return stuck?R.drawable.queen_stuck_yellow:R.drawable.queen_yellow;
+		default:
+			return 0;
+		}
+	}
+	
+	public static int getMalePictId(Male m){
+		switch(m){
+		case GREEN:
+			return R.drawable.male_spawn_green;
+		case YELLOW:
+			return R.drawable.male_spawn_yellow;
+		case RED:
+			return R.drawable.male_spawn_red;
+		case BLUE:
+			return R.drawable.male_spawn_blue;
+		case PINK:
+			return R.drawable.male_spawn_pink;
+		case PURPLE:
+			return R.drawable.male_spawn_purple;
 		default:
 			return 0;
 		}
