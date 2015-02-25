@@ -60,19 +60,19 @@ public class GameEngine {
 	}
 
 	public boolean canProcess(int x, int y) {
-		// si pas une case adjacente
+		// si pas une case adjacente: RAS
 		if (!Tile.areTilesAdjacent(xSrc, ySrc, x, y)) {
 			return false;
 		}
 
-		// clique sur la meme case: deselection
+		// si clique sur la meme case: deselection
 		if (x == xSrc && y == ySrc) {
 			clearSrcPosition();
 			activePlayableFrogs();
 			return false;
 		}		
 
-		// si tuile encore cachee
+		// si tuile encore face cachee: ok
 		if (tiles[x][y].isHidden()) {
 			xDest = x;
 			yDest = y;
@@ -101,18 +101,41 @@ public class GameEngine {
 		}
 	}
 
-	public void process() {
+	public void process(){
+		process(0);
+	}
+	
+	public void process(int destFrogId) {
 		tiles[xDest][yDest].setHidden(false);
 	
-		// mange un enemi
+		// mange un enemi ?
 		TileOccupants occ = getTileOccupants(xDest, yDest);
-		
 		if(occ.getCount()>0){
 			if (tiles[xDest][yDest].getType().equals(TileType.WOODLOG)) {
 				if (selFrog.isQueen()) {
-					// TODO
+					if(occ.getCount() == 1){
+						if(occ.getFrog1().isQueen()){
+							players.get(occ.getFrog1pId()).eaten();
+						}else{
+							players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
+						}
+					}else{
+						players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
+						players.get(occ.getFrog2pId()).removeMaid(xDest, yDest);
+					}
 				}else{
-					// TODO
+					if(occ.getCount() == 1){
+						if(occ.getFrog1().isQueen()){
+							players.get(occ.getFrog1pId()).eaten();
+						}
+					}else{
+						// TODO: choisir entre les 2 servantes enemies
+						if(occ.getFrog1().getId() == destFrogId){
+							players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
+						}else{
+							players.get(occ.getFrog2pId()).removeMaid(xDest, yDest);
+						}
+					}
 				}
 			} else {
 				int idEaten = occ.getFrog1pId();
@@ -136,7 +159,7 @@ public class GameEngine {
 		// deplacement
 		cPlayer.getFrog(selFrog.getId()).moveTo(xDest, yDest);
 
-		// execute le pouvoir de la tuile
+		// execution du pouvoir de la tuile
 		switch (tiles[xDest][yDest].getType()) {
 		case MOSQUITO:
 			if(cPlayer.getCountPlayableFrogs()>1){
@@ -348,8 +371,6 @@ public class GameEngine {
 			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 1);
 			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 2);
 			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT - 1);
-
-			// p.addMaid(0, 0);
 			players.add(p);
 		} else if (nPlayers == 3) {
 			p = new Player(0);
@@ -369,7 +390,6 @@ public class GameEngine {
 			p.addMaid(0, Cnst.ROWS_COUNT - 2);
 			p.addMaid(1, Cnst.ROWS_COUNT - 1);
 			players.add(p);
-			int a;
 		} else {
 			p = new Player(0);
 			p.setQueen(0, 0);
@@ -384,15 +404,15 @@ public class GameEngine {
 			players.add(p);
 
 			p = new Player(2);
-			p.setQueen(0, Cnst.ROWS_COUNT - 1);
-			p.addMaid(0, Cnst.ROWS_COUNT - 2);
-			p.addMaid(1, Cnst.ROWS_COUNT - 1);
-			players.add(p);
-
-			p = new Player(3);
 			p.setQueen(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 1);
 			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 2);
 			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT - 1);
+			players.add(p);
+			
+			p = new Player(3);
+			p.setQueen(0, Cnst.ROWS_COUNT - 1);
+			p.addMaid(0, Cnst.ROWS_COUNT - 2);
+			p.addMaid(1, Cnst.ROWS_COUNT - 1);
 			players.add(p);
 		}
 	}

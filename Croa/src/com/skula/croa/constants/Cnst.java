@@ -19,6 +19,8 @@ public class Cnst {
 	public static final int FROG_HEIGHT = 60;
 	public static final int QUEEN_SIZE = 90;
 	public static final int MALE_SPAWN_SIZE = 20;
+	public static final int GRAVE_WIDTH = 70;
+	public static final int GRAVE_HEIGHT = 47;
 
 	public static final int FROGS_COUNT = 6;
 

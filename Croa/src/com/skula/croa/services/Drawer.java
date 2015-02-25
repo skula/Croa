@@ -33,36 +33,15 @@ public class Drawer {
 		int x = 50;
 		int y = 50;
 		paint.setColor(Color.CYAN);
-		c.drawText("Joueur 1", x, y, paint);
-		y += 20;
-		for(Male m : engine.getPlayer(0).getMalesLeft()){
-			int id = Cnst.getMalePictId(m);
-			c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
-						   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
-			x +=25;			
-		}
-		
-		x = 1070;
-		y = 50;
-		// joueur 2
-		paint.setColor(Color.MAGENTA);
-		c.drawText("Joueur 2", x, y, paint);
-		y += 20;
-		for(Male m : engine.getPlayer(1).getMalesLeft()){
-			int id = Cnst.getMalePictId(m);
-			c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
-						   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
-			x +=25;			
-		}
-		
-		if(np >= 3){
-			// joueur 3
-			paint.setColor(Color.GREEN);
-			x= 50;
-			y = 650;
-			c.drawText("Joueur 3", x, y, paint);
+		c.drawText("Joueur 1", x, y, paint);	
+		if(engine.getPlayer(0).isDead()){
+			x = 80;
 			y += 20;
-			for(Male m : engine.getPlayer(2).getMalesLeft()){
+			c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0, Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT),
+						   new Rect(x, y, x + Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
+		}else{
+			y += 20;
+			for(Male m : engine.getPlayer(0).getMalesLeft()){
 				int id = Cnst.getMalePictId(m);
 				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
 							   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
@@ -70,19 +49,71 @@ public class Drawer {
 			}
 		}
 		
-		if(np == 4){
-			// joueur 4
-			paint.setColor(Color.YELLOW);
-			x= 1070;
-			y = 650;
-			c.drawText("Joueur 4", x, y, paint);	
+		x = 1070;
+		y = 50;
+		// joueur 2
+		paint.setColor(Color.MAGENTA);
+		c.drawText("Joueur 2", x, y, paint);
+		
+		if(engine.getPlayer(1).isDead()){		
+			x = 1100;
 			y += 20;
-			for(Male m : engine.getPlayer(3).getMalesLeft()){
+			c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0, Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT),
+						   new Rect(x, y, x + Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
+		}else{
+			y += 20;
+			for(Male m : engine.getPlayer(1).getMalesLeft()){
 				int id = Cnst.getMalePictId(m);
 				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
 							   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
 				x +=25;			
-			}		
+			}
+		}
+		
+		if(np >= 3){
+			// joueur 4
+			paint.setColor(Color.YELLOW);
+			x= 1070;
+			y = 630;
+			c.drawText("Joueur 4", x, y, paint);	
+			
+			if(engine.getPlayer(3).isDead()){		
+				x = 1100;
+				y += 20;
+				c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0, Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT),
+							   new Rect(x, y, x + Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
+			}else{
+				y += 20;
+				for(Male m : engine.getPlayer(3).getMalesLeft()){
+					int id = Cnst.getMalePictId(m);
+					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+								   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
+					x +=25;			
+				}
+			}
+		}
+		
+		if(np == 4){
+			// joueur 3
+			paint.setColor(Color.GREEN);
+			x= 50;
+			y = 630;
+			c.drawText("Joueur 3", x, y, paint);
+			
+			if(engine.getPlayer(2).isDead()){
+				x = 80;
+				y += 20;
+				c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0, Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT),
+							   new Rect(x, y, x + Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
+			}else{
+				y += 20;
+				for(Male m : engine.getPlayer(2).getMalesLeft()){
+					int id = Cnst.getMalePictId(m);
+					c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+								   new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE), paint);
+					x +=25;			
+				}
+			}
 		}
 	}
 	

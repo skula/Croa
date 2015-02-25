@@ -58,6 +58,8 @@ public class PictureLibrary{
 		this.map.put(R.drawable.male_spawn_yellow, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_yellow));
 
 		this.map.put(R.drawable.sel, 		BitmapFactory.decodeResource(res, R.drawable.sel));
+		
+		this.map.put(R.drawable.grave, 		BitmapFactory.decodeResource(res, R.drawable.grave));
 	}
 		
 	public Bitmap get(int id){

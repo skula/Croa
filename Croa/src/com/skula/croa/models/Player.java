@@ -201,7 +201,7 @@ public class Player {
 	
 	public void eaten() {
 		maids.clear();
-		this.dead = dead;
+		this.dead = true;
 	}
 
 	public void setMaids(List<Frog> maids) {

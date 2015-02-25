@@ -2,13 +2,12 @@ package com.skula.croa.activities.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.skula.croa.constants.Cnst;
+import com.skula.croa.enums.TileType;
 import com.skula.croa.models.Frog;
 import com.skula.croa.models.Position;
 import com.skula.croa.models.TileOccupants;
@@ -48,10 +47,15 @@ public class BoardView extends View {
 					return true;
 				}
 
-				engine.setSrcPos(position.getX(), position.getY());
-				engine.setSelFrog(choice);
+				if(engine.isSrcSelected()){
+					engine.setSrcPos(position.getX(), position.getY());
+					engine.setSelFrog(choice);
+				}else{
+					engine.setDestPos(position.getX(), position.getY());
+					engine.process(choice);
+				}
+				
 				dualSelect = false;		
-
 				invalidate();
 				return true;
 			}
@@ -77,7 +81,19 @@ public class BoardView extends View {
 				}
 			}else{
 				if(engine.canProcess(p.getX(), p.getY())){
-					engine.process();
+					if(engine.getTiles()[p.getX()][p.getY()].getType().equals(TileType.WOODLOG)){
+						TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
+						if(occ.getCount() == 2){
+							int pId = engine.getPlayer(engine.getToken()).getId();
+							if(occ.getFrog1pId() != pId && occ.getFrog2pId() != pId){
+								dualSelect = true;
+							}
+						}
+					}
+
+					if(!dualSelect){
+						engine.process();
+					}
 				}
 			}
 			
