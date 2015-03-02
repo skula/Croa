@@ -68,13 +68,13 @@ public class BoardView extends View {
 			
 			if(!engine.isSrcSelected()){
 				if(engine.canSelectFrog(p.getX(), p.getY())){
+					engine.setSrcPos(p.getX(), p.getY());
 					TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
+					Frog f = occ.getFrogByPlayerId(engine.getToken());
+					engine.setSelFrog(f.getId());
 					if(occ.isQueenAndMaid(engine.getToken())){
 						dualSelect = true;
 					}else{
-						engine.setSrcPos(p.getX(), p.getY());
-						Frog f = occ.getFrogByPlayerId(engine.getToken());
-						engine.setSelFrog(f.getId());
 					}
 				}else{
 					return true;
@@ -84,10 +84,12 @@ public class BoardView extends View {
 					if(engine.getTiles()[p.getX()][p.getY()].getType().equals(TileType.WOODLOG)){
 						TileOccupants occ = engine.getTileOccupants(p.getX(), p.getY());
 						if(occ.getCount() == 2){
-							int pId = engine.getPlayer(engine.getToken()).getId();
-							if(occ.getFrog1pId() != pId && occ.getFrog2pId() != pId){
-								dualSelect = true;
-							}
+                            int pId = engine.getPlayer(engine.getToken()).getId();
+                            if(!engine.getSelFrog().isQueen()
+                                           && occ.getFrog1pId() != pId
+                                           && occ.getFrog2pId() != pId){
+                                           dualSelect = true;
+                            }
 						}
 					}
 

@@ -23,7 +23,7 @@ public class GameEngine {
 	public int ySrc;
 	public int xDest;
 	public int yDest;
-	
+
 	private int pToken;
 	private Player cPlayer;
 
@@ -34,13 +34,13 @@ public class GameEngine {
 		this.nPlayers = nPlayers;
 		this.players = new ArrayList<Player>();
 		this.pToken = 0;
-		this.selFrog = null;		
+		this.selFrog = null;
 		clearSrcPosition();
 		clearDestPosition();
-		
+
 		positionTiles();
 		positionFrogs();
-		
+
 		cPlayer = getPlayer(pToken);
 		playableFrogs = new ArrayList<Integer>();
 		updatePlayableFrogs(TileType.NONE);
@@ -51,9 +51,9 @@ public class GameEngine {
 		boolean resM = f != null && isPlayable(f.getId());
 		boolean resQ = cPlayer.hasQueen(x, y)
 				&& isPlayable(cPlayer.getQueen().getId());
-		if(resM || resQ){
+		if (resM || resQ) {
 			return true;
-		} else{
+		} else {
 			activePlayableFrogs();
 			return false;
 		}
@@ -70,7 +70,7 @@ public class GameEngine {
 			clearSrcPosition();
 			activePlayableFrogs();
 			return false;
-		}		
+		}
 
 		// si tuile encore face cachee: ok
 		if (tiles[x][y].isHidden()) {
@@ -86,7 +86,7 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
-				//activePlayableFrogs();
+				// activePlayableFrogs();
 				return false;
 			}
 		} else {
@@ -95,79 +95,82 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
-				//activePlayableFrogs();
+				// activePlayableFrogs();
 				return false;
 			}
 		}
 	}
 
-	public void process(){
+	public void process() {
 		process(0);
 	}
-	
+
 	public void process(int destFrogId) {
 		tiles[xDest][yDest].setHidden(false);
-	
+
 		// mange un enemi ?
 		TileOccupants occ = getTileOccupants(xDest, yDest);
-		if(occ.getCount()>0){
+		if (occ.getCount() > 0) {
 			if (tiles[xDest][yDest].getType().equals(TileType.WOODLOG)) {
 				if (selFrog.isQueen()) {
-					if(occ.getCount() == 1){
-						if(occ.getFrog1().isQueen()){
+					if (occ.getCount() == 1) {
+						if (occ.getFrog1().isQueen()) {
 							players.get(occ.getFrog1pId()).eaten();
-						}else{
-							players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
+						} else {
+							players.get(occ.getFrog1pId()).removeMaid(xDest,
+									yDest);
 						}
-					}else{
+					} else {
 						players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
 						players.get(occ.getFrog2pId()).removeMaid(xDest, yDest);
 					}
-				}else{
-					if(occ.getCount() == 1){
-						if(occ.getFrog1().isQueen()){
+				} else {
+					if (occ.getCount() == 1) {
+						if (occ.getFrog1().isQueen()) {
 							players.get(occ.getFrog1pId()).eaten();
 						}
-					}else{
+					} else {
 						// TODO: choisir entre les 2 servantes enemies
-						if(occ.getFrog1().getId() == destFrogId){
-							players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
-						}else{
-							players.get(occ.getFrog2pId()).removeMaid(xDest, yDest);
+						if (occ.getFrog1().getId() == destFrogId) {
+							players.get(occ.getFrog1pId()).removeMaid(xDest,
+									yDest);
+						} else {
+							players.get(occ.getFrog2pId()).removeMaid(xDest,
+									yDest);
 						}
 					}
 				}
 			} else {
 				int idEaten = occ.getFrog1pId();
-				if(occ.getFrog1().isQueen()){
+				if (occ.getFrog1().isQueen()) {
 					players.get(idEaten).eaten();
-				}else{
+				} else {
 					players.get(idEaten).removeMaid(xDest, yDest);
 				}
-				
-				if(occ.getCount()==2){
+
+				if (occ.getCount() == 2) {
 					idEaten = occ.getFrog1pId();
-					if(occ.getFrog1().isQueen()){
+					if (occ.getFrog1().isQueen()) {
 						players.get(idEaten).eaten();
-					}else{
+					} else {
 						players.get(idEaten).removeMaid(xDest, yDest);
 					}
 				}
 			}
 		}
-		
+
 		// deplacement
 		cPlayer.getFrog(selFrog.getId()).moveTo(xDest, yDest);
 
 		// execution du pouvoir de la tuile
 		switch (tiles[xDest][yDest].getType()) {
 		case MOSQUITO:
-			if(cPlayer.getCountPlayableFrogs()>1){
+			if (cPlayer.getCountPlayableFrogs() > 1) {
 				updatePlayableFrogs(TileType.MOSQUITO);
 				activePlayableFrogs();
 				clearSrcPosition();
 				clearDestPosition();
-			}else{
+			} else {
 				nextPlayer();
 			}
 			break;
@@ -200,7 +203,8 @@ public class GameEngine {
 			nextPlayer();
 			break;
 		case MALE:
-			if (selFrog.isQueen() && canReproduce(tiles[xDest][yDest].getMaleId())) {
+			if (selFrog.isQueen()
+					&& canReproduce(tiles[xDest][yDest].getMaleId())) {
 				reproduce(tiles[xDest][yDest].getMaleId());
 			}
 			nextPlayer();
@@ -219,7 +223,8 @@ public class GameEngine {
 					playableFrogs.add(f.getId());
 				}
 			}
-			if (!cPlayer.getQueen().isStuck() && cPlayer.getQueen().getId() != selFrog.getId()) {
+			if (!cPlayer.getQueen().isStuck()
+					&& cPlayer.getQueen().getId() != selFrog.getId()) {
 				playableFrogs.add(cPlayer.getQueen().getId());
 			}
 			activePlayableFrogs();
@@ -240,13 +245,14 @@ public class GameEngine {
 		}
 	}
 
-	public void activePlayableFrogs(){		
-		for(Frog f : cPlayer.getMaids()){
+	public void activePlayableFrogs() {
+		for (Frog f : cPlayer.getMaids()) {
 			f.setActive(playableFrogs.contains(f.getId()));
 		}
-		cPlayer.getQueen().setActive(playableFrogs.contains(cPlayer.getQueen().getId()));
+		cPlayer.getQueen().setActive(
+				playableFrogs.contains(cPlayer.getQueen().getId()));
 	}
-	
+
 	private boolean isPlayable(int id) {
 		return playableFrogs.contains(id);
 	}
@@ -269,17 +275,18 @@ public class GameEngine {
 		cPlayer = getPlayer(pToken);
 
 		cPlayer.updateStuckTime();
-		
+
 		Position p = cPlayer.isQueenAndMaidOnOneTile();
-		if(p!=null){
-			// TODO: !!! cas a traiter: une reine et une maid sur la mm case jouent obligatoirement !!!
+		if (p != null) {
+			// TODO: !!! cas a traiter: une reine et une maid sur la mm case
+			// jouent obligatoirement !!!
 			playableFrogs.clear();
 			playableFrogs.add(cPlayer.getQueen().getId());
 			playableFrogs.add(cPlayer.getMaid(p.getX(), p.getY()).getId());
-		}else{
+		} else {
 			updatePlayableFrogs(TileType.NONE);
 		}
-		
+
 		activePlayableFrogs();
 	}
 
@@ -298,7 +305,12 @@ public class GameEngine {
 			return !cPlayer.hasFrog(x, y);
 		} else {
 			TileOccupants occ = getTileOccupants(x, y);
-			return occ.getWeight() < 2;
+			if (occ.getCount() == 2) {
+				return occ.getFrog1pId() != pToken
+						|| occ.getFrog2pId() != pToken;
+			} else {
+				return true;
+			}
 		}
 	}
 
@@ -310,7 +322,8 @@ public class GameEngine {
 			} else if (occ.getCount() == 1) {
 				return occ.getFrog1pId() != pToken;
 			} else {
-				return occ.getFrog1pId() != pToken && occ.getFrog2pId() != pToken;
+				return occ.getFrog1pId() != pToken
+						&& occ.getFrog2pId() != pToken;
 			}
 		} else {
 			return !cPlayer.hasMaid(x, y);
@@ -325,7 +338,7 @@ public class GameEngine {
 		TileOccupants occ = new TileOccupants();
 
 		for (Player p : players) {
-			if(!p.isDead()){
+			if (!p.isDead()) {
 				if (p.hasQueen(x, y)) {
 					occ.addOccupant(p.getId(), p.getQueen());
 				}
@@ -408,7 +421,7 @@ public class GameEngine {
 			p.addMaid(Cnst.COLUMNS_COUNT - 1, Cnst.ROWS_COUNT - 2);
 			p.addMaid(Cnst.COLUMNS_COUNT - 2, Cnst.ROWS_COUNT - 1);
 			players.add(p);
-			
+
 			p = new Player(3);
 			p.setQueen(0, Cnst.ROWS_COUNT - 1);
 			p.addMaid(0, Cnst.ROWS_COUNT - 2);
