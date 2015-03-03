@@ -126,17 +126,27 @@ public class GameEngine {
 					}
 				} else {
 					if (occ.getCount() == 1) {
+						// si une servante se deplace sur une case occupée par une reine, la reine est mangee
 						if (occ.getFrog1().isQueen()) {
 							players.get(occ.getFrog1pId()).eaten();
 						}
 					} else {
-						// TODO: choisir entre les 2 servantes enemies
-						if (occ.getFrog1().getId() == destFrogId) {
-							players.get(occ.getFrog1pId()).removeMaid(xDest,
-									yDest);
-						} else {
-							players.get(occ.getFrog2pId()).removeMaid(xDest,
-									yDest);
+						// si une des 2 servante est une amie, on mnage l'autre
+						if(occ.getFrog1pId() == pToken || occ.getFrog1pId() == pToken){
+							if(occ.getFrog1pId() == pToken){
+								players.get(occ.getFrog2pId()).removeMaid(xDest, yDest);
+							}else{
+								players.get(occ.getFrog1pId()).removeMaid(xDest, yDest);
+							}
+						}else{
+							// si 2 servante enemies, choisir entre les 2
+							if (occ.getFrog1().getId() == destFrogId) {
+								players.get(occ.getFrog1pId()).removeMaid(xDest,
+										yDest);
+							} else {
+								players.get(occ.getFrog2pId()).removeMaid(xDest,
+										yDest);
+							}
 						}
 					}
 				}
@@ -212,6 +222,22 @@ public class GameEngine {
 		default:
 			break;
 		}
+	}
+	
+	public int getWinner(){
+		int id = -1;
+		int countAlive = 0;
+		for(Player p : players){
+			if(!p.isDead()){
+				if(countAlive==0){
+					id = p.getId();
+					countAlive++;
+				}else{
+					return -1;
+				}
+			}			
+		}		
+		return id;
 	}
 
 	private void updatePlayableFrogs(TileType type) {

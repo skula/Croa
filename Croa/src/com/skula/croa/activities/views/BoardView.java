@@ -20,7 +20,7 @@ public class BoardView extends View {
 
 	private Position position;
 	private boolean dualSelect;
-
+	
 	public BoardView(Context context, int nPlayers) {
 		super(context);
 		this.engine = new GameEngine(nPlayers);
@@ -40,7 +40,12 @@ public class BoardView extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			// Gestion sélection d'une tuile à 2 grenouille
+			if(engine.getWinner()!=-1){
+				// TODO : redirection vers GameModeActivity
+				return true;
+			}			
+			
+			// Gestion sélection d'une tuile à 2 grenouille		
 			if(dualSelect){
 				int choice = getChoice(x, y);
 				if(choice==-1){
@@ -144,14 +149,9 @@ public class BoardView extends View {
 			drawer.drawDualSelect(canvas, engine.getTileOccupants(position.getX(), position.getY()));
 		}
 		
-		/*Paint p = new Paint();
-		p.setColor(Color.RED);
-		p.setTextSize(20f);
-		
-		if(position!=null){
-			canvas.drawText("(i=" + position.getX() + ", j:" + position.getY() + ")", 20, 20, p);
-		}*/
+		int idWin = engine.getWinner();
+		if(idWin!=-1){
+			drawer.drawWinner(canvas, idWin);
+		}
 	}
-	
-	
 }

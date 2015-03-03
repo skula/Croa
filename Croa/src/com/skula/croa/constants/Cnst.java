@@ -21,6 +21,12 @@ public class Cnst {
 	public static final int MALE_SPAWN_SIZE = 20;
 	public static final int GRAVE_WIDTH = 70;
 	public static final int GRAVE_HEIGHT = 47;
+	
+	public static final int GAME_MODE_WIDTH = 200;
+	public static final int GAME_MODE_HEIGHT = 75;
+
+	public static final int LOGO_WIDTH = 700;
+	public static final int LOGO_HEIGHT = 264;
 
 	public static final int FROGS_COUNT = 6;
 

@@ -25,6 +25,10 @@ public class Drawer {
 		this.lib = new PictureLibrary(res);
 	}
 
+	public void drawWinner(Canvas c, int id){
+	
+	}
+	
 	public void drawScores(Canvas c) {
 		int np = engine.getnPlayers();
 		paint.setTextSize(30f);

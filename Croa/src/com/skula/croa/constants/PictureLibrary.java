@@ -60,6 +60,10 @@ public class PictureLibrary{
 		this.map.put(R.drawable.sel, 		BitmapFactory.decodeResource(res, R.drawable.sel));
 		
 		this.map.put(R.drawable.grave, 		BitmapFactory.decodeResource(res, R.drawable.grave));
+		
+		this.map.put(R.drawable.croa_logo, 		BitmapFactory.decodeResource(res, R.drawable.croa_logo));
+		
+		
 	}
 		
 	public Bitmap get(int id){
