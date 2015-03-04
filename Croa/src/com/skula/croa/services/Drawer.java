@@ -26,7 +26,31 @@ public class Drawer {
 	}
 
 	public void drawWinner(Canvas c, int id){
-	
+		/*int pictId = 0;
+		switch(id){
+		case 0:
+			pictId = R.drawable.victory_player1;
+			break;
+		case 1:
+			pictId = R.drawable.victory_player2;
+			break;
+		case 2:
+			pictId = R.drawable.victory_player3;
+			break;
+		case 3:
+			pictId = R.drawable.victory_player4;
+			break;
+		default:
+			break;
+		}
+		
+		c.drawBitmap(lib.get(R.drawable.victory), new Rect(0, 0, 400, 200), new Rect(Cnst.X0,
+						Cnst.Y0, Cnst.X0 + 400, Cnst.Y0 + 200),
+						paint);
+		
+		c.drawBitmap(lib.get(pictId), new Rect(0, 0, 400, 200), new Rect(Cnst.X0,
+						Cnst.Y0 + 450, Cnst.X0 + 400, Cnst.Y0 + 450 + 200),
+						paint);*/
 	}
 	
 	public void drawScores(Canvas c) {

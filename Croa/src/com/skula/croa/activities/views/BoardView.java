@@ -20,6 +20,7 @@ public class BoardView extends View {
 
 	private Position position;
 	private boolean dualSelect;
+	private boolean dualSrcSel;
 	
 	public BoardView(Context context, int nPlayers) {
 		super(context);
@@ -27,6 +28,7 @@ public class BoardView extends View {
 		this.drawer = new Drawer(context.getResources(), engine);
 		this.dualSelect = false;
 		this.position = new Position(-1,-1);
+		this.dualSrcSel = false;
 	}
 
 	@Override
@@ -52,11 +54,12 @@ public class BoardView extends View {
 					return true;
 				}
 
-				if(engine.isSrcSelected()){
+				if(dualSrcSel){
 					engine.setSrcPos(position.getX(), position.getY());
 					engine.setSelFrog(choice);
+					dualSrcSel = false;
 				}else{
-					engine.setDestPos(position.getX(), position.getY());
+					//engine.setDestPos(position.getX(), position.getY());
 					engine.process(choice);
 				}
 				
@@ -79,6 +82,7 @@ public class BoardView extends View {
 					engine.setSelFrog(f.getId());
 					if(occ.isQueenAndMaid(engine.getToken())){
 						dualSelect = true;
+						dualSrcSel = true;
 					}else{
 					}
 				}else{

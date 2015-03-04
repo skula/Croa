@@ -33,6 +33,8 @@ public class Cnst {
 	public static final int SPACE_MAX_SINGLE = 1;
 	public static final int SPACE_MAX_DOUBLE = 2;
 	
+	public static final String BUNDLE_NAME_PLAYERS_COUNT = "nplayers";
+	
 	public static int getMaidPictId(int playerId, boolean stuck){
 		switch (playerId) {
 		case 0:
