@@ -118,7 +118,7 @@ public class Drawer {
 						+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
 			} else {
 				y += 20;
-				for (Male m : engine.getPlayer(3).getMalesLeft()) {
+				for (Male m : engine.getPlayer(2).getMalesLeft()) {
 					int id = Cnst.getMalePictId(m);
 					c.drawBitmap(lib.get(id), new Rect(0, 0,
 							Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
@@ -144,7 +144,7 @@ public class Drawer {
 						+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
 			} else {
 				y += 20;
-				for (Male m : engine.getPlayer(2).getMalesLeft()) {
+				for (Male m : engine.getPlayer(3).getMalesLeft()) {
 					int id = Cnst.getMalePictId(m);
 					c.drawBitmap(lib.get(id), new Rect(0, 0,
 							Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
@@ -278,6 +278,8 @@ public class Drawer {
 	}
 
 	public void drawTiles(Canvas c) {
+		//paint.setColor(Color.WHITE);
+		//c.drawRect(new Rect(0,0 ,1280,800), paint);
 		Tile[][] tiles = engine.getTiles();
 
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {

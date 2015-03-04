@@ -147,8 +147,8 @@ public class BoardView extends View {
 		drawer.drawTiles(canvas);
 		drawer.drawActiveFrogs(canvas);
 		drawer.drawFrogs(canvas);
-		drawer.drawScores(canvas);
 		
+		drawer.drawScores(canvas);
 		if(dualSelect){
 			drawer.drawDualSelect(canvas, engine.getTileOccupants(position.getX(), position.getY()));
 		}

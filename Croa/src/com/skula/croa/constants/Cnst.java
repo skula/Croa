@@ -11,7 +11,7 @@ public class Cnst {
 	public static final int COLUMNS_COUNT = 8;
 	public static final int ROWS_COUNT = 8;
 	public static final int X0 = 280;
-	public static final int Y0 = 0;
+	public static final int Y0 = 7;
 	
 	// pictures
 	public static final int TILE_SIZE = 90;
@@ -22,8 +22,8 @@ public class Cnst {
 	public static final int GRAVE_WIDTH = 70;
 	public static final int GRAVE_HEIGHT = 47;
 	
-	public static final int GAME_MODE_WIDTH = 200;
-	public static final int GAME_MODE_HEIGHT = 75;
+	public static final int GAME_MODE_WIDTH = 310;
+	public static final int GAME_MODE_HEIGHT = 60;
 
 	public static final int LOGO_WIDTH = 700;
 	public static final int LOGO_HEIGHT = 264;

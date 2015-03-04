@@ -38,7 +38,8 @@ public class GameEngine {
 		clearSrcPosition();
 		clearDestPosition();
 
-		positionTiles();
+		//positionTiles();
+		testMock();
 		positionFrogs();
 
 		cPlayer = getPlayer(pToken);
@@ -86,7 +87,6 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
-				// activePlayableFrogs();
 				return false;
 			}
 		} else {
@@ -95,7 +95,6 @@ public class GameEngine {
 				yDest = y;
 				return true;
 			} else {
-				// activePlayableFrogs();
 				return false;
 			}
 		}
@@ -291,7 +290,7 @@ public class GameEngine {
 			} else {
 				pToken++;
 			}
-			if (!players.get(pToken).isDead()) {
+			if (!players.get(pToken).isDead() && players.get(pToken).getCountPlayableFrogs()>0) {
 				tmp = true;
 			}
 		}
@@ -304,8 +303,6 @@ public class GameEngine {
 
 		Position p = cPlayer.isQueenAndMaidOnOneTile();
 		if (p != null) {
-			// TODO: !!! cas a traiter: une reine et une maid sur la mm case
-			// jouent obligatoirement !!!
 			playableFrogs.clear();
 			playableFrogs.add(cPlayer.getQueen().getId());
 			playableFrogs.add(cPlayer.getMaid(p.getX(), p.getY()).getId());
@@ -469,32 +466,46 @@ public class GameEngine {
 		}
 	}
 
-	private void dummy() {
-		List<Tile> tmp = new ArrayList<Tile>();
-		for (int i = 0; i < 64; i++) {
-			tmp.add(new Tile(TileType.REED, TileBackType.DEPTH_1, Male.NONE, 1));
-		}
-
-		Collections.shuffle(tmp);
-
+	private void testMock() {
 		this.tiles = new Tile[Cnst.COLUMNS_COUNT][Cnst.ROWS_COUNT];
 
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
-				tiles[j][i] = tmp.remove(0);
+				tiles[j][i] = new Tile(TileType.REED, TileBackType.DEPTH_1, Male.NONE, 1);
 			}
 		}
 
-		Player p = new Player(0);
-		p.setQueen(2, 0);
-		p.addMaid(0, 0);
-		p.addMaid(0, 1);
-		players.add(p);
+		tiles[1][1] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[1][2] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[1][3] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[1][4] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[1][5] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[1][6] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);	
+		tiles[2][2] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[2][3] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[2][4] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[2][5] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[4][3] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[4][4] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[5][2] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[5][5] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[6][1] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[6][6] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[6][6] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[3][2] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		tiles[3][5] = new Tile(TileType.WATERLILY, TileBackType.DEPTH_1, Male.NONE, 1);
+		
+		tiles[3][3] = new Tile(TileType.WOODLOG, TileBackType.DEPTH_1, Male.NONE, 2);
+		tiles[3][4] = new Tile(TileType.WOODLOG, TileBackType.DEPTH_1, Male.NONE, 2);
 
-		p = new Player(1);
-		p.setQueen(1, 1);
-		p.addMaid(0, 0);
-		players.add(p);
+		tiles[4][2] = new Tile(TileType.MUD, TileBackType.DEPTH_1, Male.NONE, 2);
+		tiles[4][5] = new Tile(TileType.MUD, TileBackType.DEPTH_1, Male.NONE, 2);
+		
+		tiles[0][1] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.RED, 1);
+		tiles[0][2] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.GREEN, 1);
+		tiles[0][3] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.YELLOW, 1);
+		tiles[0][4] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.PURPLE, 1);
+		tiles[0][5] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.PURPLE, 1);
 	}
 
 	public void setSrcPos(int x, int y) {

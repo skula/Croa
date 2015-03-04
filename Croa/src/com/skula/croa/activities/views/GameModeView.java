@@ -3,6 +3,7 @@ package com.skula.croa.activities.views;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -14,9 +15,9 @@ import com.skula.croa.constants.Cnst;
 import com.skula.croa.constants.PictureLibrary;
 
 public class GameModeView extends View {
-	private static final int X0 = 1000;
-	private static final int Y0 = 500;
-	private static final int DY = 125;
+	private static final int X0 = 800;
+	private static final int Y0 = 400;
+	private static final int DY = 90;
 	
 	private PictureLibrary lib;
 	private Paint paint;
@@ -38,9 +39,10 @@ public class GameModeView extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:			
-			if(getPlayerCount(x, y)!=-1){
+			int c = getPlayerCount(x, y);
+			if(c!=-1){
 				Intent intent = new Intent(getContext(), BoardActivity.class);
-				intent.putExtra(Cnst.BUNDLE_NAME_PLAYERS_COUNT, getPlayerCount(x, y)+"");
+				intent.putExtra(Cnst.BUNDLE_NAME_PLAYERS_COUNT, c+"");
 				getContext().startActivity(intent);
 			}
 			invalidate();
@@ -73,24 +75,31 @@ public class GameModeView extends View {
 	
 	@Override
 	public void draw(Canvas canvas) {		
+		paint.setColor(Color.WHITE);
+		canvas.drawRect(new Rect(0,0 ,1280,800), paint);
 		canvas.drawBitmap(lib.get(R.drawable.croa_logo), new Rect(0, 0, Cnst.LOGO_WIDTH,
-						Cnst.LOGO_HEIGHT), new Rect(0,0, Cnst.LOGO_WIDTH, Cnst.LOGO_HEIGHT),
-						paint);
-						
+						Cnst.LOGO_HEIGHT), new Rect(200, 100, Cnst.LOGO_WIDTH + 200, Cnst.LOGO_HEIGHT + 100),
+						paint);				
 		int xCount = X0;
 		int yCount = Y0;
 		
-		/*Rect r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
-		canvas.drawBitmap(lib.get(R.drawable.gamemode_two_player), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
+		
+		
+		
+		Rect r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
+
+		paint.setColor(Color.RED);
+		canvas.drawBitmap(lib.get(R.drawable.gamemode_two_players), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
 						Cnst.GAME_MODE_HEIGHT), r, paint);
 		yCount += DY;
 		r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
-		canvas.drawBitmap(lib.get(R.drawable.gamemode_three_player), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
+		canvas.drawBitmap(lib.get(R.drawable.gamemode_three_players), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
 						Cnst.GAME_MODE_HEIGHT), r, paint);
 		
 		yCount += DY;
 		r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
-		canvas.drawBitmap(lib.get(R.drawable.gamemode_four_player), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
-						Cnst.GAME_MODE_HEIGHT), r, paint);*/
+		canvas.drawBitmap(lib.get(R.drawable.gamemode_four_players), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
+						Cnst.GAME_MODE_HEIGHT), r, paint);
+		
 	}
 }

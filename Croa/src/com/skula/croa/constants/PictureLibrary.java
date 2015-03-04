@@ -67,10 +67,10 @@ public class PictureLibrary{
 		this.map.put(R.drawable.victory_player3, 		BitmapFactory.decodeResource(res, R.drawable.victory_player3));
 		*/
 		this.map.put(R.drawable.croa_logo, 		BitmapFactory.decodeResource(res, R.drawable.croa_logo));
-		/*this.map.put(R.drawable.gamemode_two_player, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_two_player));
-		this.map.put(R.drawable.gamemode_three_player, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_three_player));
-		this.map.put(R.drawable.gamemode_four_player, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_four_player));
-	*/
+		this.map.put(R.drawable.gamemode_four_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_four_players));
+		this.map.put(R.drawable.gamemode_three_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_three_players));
+		this.map.put(R.drawable.gamemode_two_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_two_players));
+	
 	}
 		
 	public Bitmap get(int id){
