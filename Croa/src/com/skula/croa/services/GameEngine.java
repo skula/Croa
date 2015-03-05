@@ -328,11 +328,12 @@ public class GameEngine {
 			return !cPlayer.hasFrog(x, y);
 		} else {
 			TileOccupants occ = getTileOccupants(x, y);
-			if (occ.getCount() == 2) {
-				return occ.getFrog1pId() != pToken
-						|| occ.getFrog2pId() != pToken;
-			} else {
+			if(occ.getCount() == 0){
 				return true;
+			}else if (occ.getCount() == 1){
+				return !cPlayer.hasQueen(x, y);
+			}else{
+				return occ.getFrog1pId() != pToken || occ.getFrog2pId() != pToken;
 			}
 		}
 	}
@@ -505,7 +506,8 @@ public class GameEngine {
 		tiles[0][2] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.GREEN, 1);
 		tiles[0][3] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.YELLOW, 1);
 		tiles[0][4] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.PURPLE, 1);
-		tiles[0][5] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.PURPLE, 1);
+		tiles[0][5] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.BLUE, 1);
+		tiles[0][6] = new Tile(TileType.MALE, TileBackType.DEPTH_1, Male.PINK, 1);
 	}
 
 	public void setSrcPos(int x, int y) {

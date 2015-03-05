@@ -11,6 +11,7 @@ import com.skula.croa.constants.Cnst;
 import com.skula.croa.constants.PictureLibrary;
 import com.skula.croa.enums.Male;
 import com.skula.croa.models.Frog;
+import com.skula.croa.models.Player;
 import com.skula.croa.models.Tile;
 import com.skula.croa.models.TileOccupants;
 
@@ -26,7 +27,7 @@ public class Drawer {
 	}
 
 	public void drawWinner(Canvas c, int id){
-		/*int pictId = 0;
+		int pictId = 0;
 		switch(id){
 		case 0:
 			pictId = R.drawable.victory_player1;
@@ -44,117 +45,70 @@ public class Drawer {
 			break;
 		}
 		
-		c.drawBitmap(lib.get(R.drawable.victory), new Rect(0, 0, 400, 200), new Rect(Cnst.X0,
-						Cnst.Y0, Cnst.X0 + 400, Cnst.Y0 + 200),
-						paint);
+		c.drawBitmap(lib.get(pictId), new Rect(0, 0, 400, 100), new Rect(Cnst.X0 +90 + 90,
+				Cnst.Y0 +90 + 90+ 90, Cnst.X0 + 400+90 + 90, Cnst.Y0 +90 + 90 + 100+ 90),
+				paint);
 		
-		c.drawBitmap(lib.get(pictId), new Rect(0, 0, 400, 200), new Rect(Cnst.X0,
-						Cnst.Y0 + 450, Cnst.X0 + 400, Cnst.Y0 + 450 + 200),
-						paint);*/
+		c.drawBitmap(lib.get(R.drawable.victory), new Rect(0, 0, 400, 100), new Rect(Cnst.X0+90 + 90,
+						Cnst.Y0+90 + 90 +100+ 90, Cnst.X0 + 400+90 + 90, Cnst.Y0+90 + 90 + 100 +  100+ 90),
+						paint);	
 	}
 	
 	public void drawScores(Canvas c) {
 		int np = engine.getnPlayers();
-		paint.setTextSize(30f);
 
 		// joueur 1
-		int x = 50;
-		int y = 50;
-		paint.setColor(Color.CYAN);
-		c.drawText("Joueur 1", x, y, paint);
-		if (engine.getPlayer(0).isDead()) {
-			x = 80;
-			y += 20;
-			c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0,
-					Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT), new Rect(x, y, x
-					+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
-		} else {
-			y += 20;
-			for (Male m : engine.getPlayer(0).getMalesLeft()) {
-				int id = Cnst.getMalePictId(m);
-				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE,
-						Cnst.MALE_SPAWN_SIZE), new Rect(x, y, x
-						+ Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE),
-						paint);
-				x += 25;
-			}
-		}
+		drawPlayerScore(c, engine.getPlayer(0), Color.CYAN, 50, 50);
 
-		x = 1070;
-		y = 50;
 		// joueur 2
-		paint.setColor(Color.MAGENTA);
-		c.drawText("Joueur 2", x, y, paint);
+		drawPlayerScore(c, engine.getPlayer(1), Color.MAGENTA, 1070, 50);
 
-		if (engine.getPlayer(1).isDead()) {
-			x = 1100;
-			y += 20;
-			c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0,
-					Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT), new Rect(x, y, x
-					+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
-		} else {
-			y += 20;
-			for (Male m : engine.getPlayer(1).getMalesLeft()) {
-				int id = Cnst.getMalePictId(m);
-				c.drawBitmap(lib.get(id), new Rect(0, 0, Cnst.MALE_SPAWN_SIZE,
-						Cnst.MALE_SPAWN_SIZE), new Rect(x, y, x
-						+ Cnst.MALE_SPAWN_SIZE, y + Cnst.MALE_SPAWN_SIZE),
-						paint);
-				x += 25;
-			}
-		}
-
+		// joueur 3
 		if (np >= 3) {
-			paint.setColor(Color.GREEN);
-			x = 1070;
-			y = 630;
-			c.drawText("Joueur 3", x, y, paint);
-
-			if (engine.getPlayer(2).isDead()) {
-				x = 1100;
-				y += 20;
-				c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0,
-						Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT), new Rect(x, y, x
-						+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
-			} else {
-				y += 20;
-				for (Male m : engine.getPlayer(2).getMalesLeft()) {
-					int id = Cnst.getMalePictId(m);
-					c.drawBitmap(lib.get(id), new Rect(0, 0,
-							Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
-							new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y
-									+ Cnst.MALE_SPAWN_SIZE), paint);
-					x += 25;
-				}
-			}
+			drawPlayerScore(c, engine.getPlayer(2), Color.GREEN, 1070, 630);
 		}
 
+		// joueur 4
 		if (np == 4) {
-			// joueur 3
-			paint.setColor(Color.YELLOW);
-			x = 50;
-			y = 630;
-			c.drawText("Joueur 4", x, y, paint);
-
-			if (engine.getPlayer(3).isDead()) {
-				x = 80;
-				y += 20;
-				c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0,
-						Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT), new Rect(x, y, x
-						+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
-			} else {
-				y += 20;
-				for (Male m : engine.getPlayer(3).getMalesLeft()) {
-					int id = Cnst.getMalePictId(m);
-					c.drawBitmap(lib.get(id), new Rect(0, 0,
-							Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
-							new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y
-									+ Cnst.MALE_SPAWN_SIZE), paint);
-					x += 25;
-				}
-			}
+			drawPlayerScore(c, engine.getPlayer(3), Color.YELLOW, 50, 630);
 		}
 	}
+	
+	private void drawPlayerScore(Canvas c, Player p, int color, int x0, int y0) {
+		paint.setColor(color);
+		int x = x0;
+		int y = y0;
+		paint.setTextSize(30f);
+		c.drawText("Joueur " + (p.getId() + 1), x, y, paint);
+
+		if (p.isDead()) {
+			x = x0 + 30;
+			y += 20;
+			c.drawBitmap(lib.get(R.drawable.grave), new Rect(0, 0,
+					Cnst.GRAVE_WIDTH, Cnst.GRAVE_HEIGHT), new Rect(x, y, x
+					+ Cnst.GRAVE_WIDTH, y + Cnst.GRAVE_HEIGHT), paint);
+		} else {
+			y += 20;
+			for (Male m : p.getMalesLeft()) {
+				int id = Cnst.getMalePictId(m);
+				c.drawBitmap(lib.get(id), new Rect(0, 0,
+						Cnst.MALE_SPAWN_SIZE, Cnst.MALE_SPAWN_SIZE),
+						new Rect(x, y, x + Cnst.MALE_SPAWN_SIZE, y
+								+ Cnst.MALE_SPAWN_SIZE), paint);
+				x += 25;
+			}
+			
+			x = x0;
+			y += 30;
+			c.drawBitmap(lib.get(R.drawable.egg), new Rect(0, 0, 20, 20), new Rect(x, y, x + 20, y + 20), paint);
+			x += 25;
+			y += 17;
+			paint.setTextSize(20f);
+			c.drawText("" + p.getMaidsLeft() , x, y, paint);
+		}
+	}
+		
+		
 
 	public void drawDualSelect(Canvas c, TileOccupants occ) {
 		paint.setColor(Color.DKGRAY);

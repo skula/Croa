@@ -1,11 +1,13 @@
 package com.skula.croa.activities.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.skula.croa.activities.GameModeActivity;
 import com.skula.croa.constants.Cnst;
 import com.skula.croa.enums.TileType;
 import com.skula.croa.models.Frog;
@@ -42,8 +44,9 @@ public class BoardView extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			if(engine.getWinner()!=-1){
-				// TODO : redirection vers GameModeActivity
+			if(engine.getWinner()!=-1){				
+				Intent intent = new Intent(getContext(), GameModeActivity.class);
+				getContext().startActivity(intent);
 				return true;
 			}			
 			
@@ -59,7 +62,6 @@ public class BoardView extends View {
 					engine.setSelFrog(choice);
 					dualSrcSel = false;
 				}else{
-					//engine.setDestPos(position.getX(), position.getY());
 					engine.process(choice);
 				}
 				
@@ -83,7 +85,6 @@ public class BoardView extends View {
 					if(occ.isQueenAndMaid(engine.getToken())){
 						dualSelect = true;
 						dualSrcSel = true;
-					}else{
 					}
 				}else{
 					return true;

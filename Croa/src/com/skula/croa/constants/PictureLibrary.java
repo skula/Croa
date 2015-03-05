@@ -56,16 +56,16 @@ public class PictureLibrary{
 		this.map.put(R.drawable.male_spawn_purple, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_purple));
 		this.map.put(R.drawable.male_spawn_red, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_red));
 		this.map.put(R.drawable.male_spawn_yellow, 		BitmapFactory.decodeResource(res, R.drawable.male_spawn_yellow));
+		this.map.put(R.drawable.grave, 		BitmapFactory.decodeResource(res, R.drawable.grave));
+		this.map.put(R.drawable.egg, 		BitmapFactory.decodeResource(res, R.drawable.egg));
 
 		this.map.put(R.drawable.sel, 		BitmapFactory.decodeResource(res, R.drawable.sel));
 		
-		this.map.put(R.drawable.grave, 		BitmapFactory.decodeResource(res, R.drawable.grave));
-		
-		/*this.map.put(R.drawable.victory, 		BitmapFactory.decodeResource(res, R.drawable.victory));
+		this.map.put(R.drawable.victory, 		BitmapFactory.decodeResource(res, R.drawable.victory));
 		this.map.put(R.drawable.victory_player1, 		BitmapFactory.decodeResource(res, R.drawable.victory_player1));
 		this.map.put(R.drawable.victory_player2, 		BitmapFactory.decodeResource(res, R.drawable.victory_player2));
 		this.map.put(R.drawable.victory_player3, 		BitmapFactory.decodeResource(res, R.drawable.victory_player3));
-		*/
+		
 		this.map.put(R.drawable.croa_logo, 		BitmapFactory.decodeResource(res, R.drawable.croa_logo));
 		this.map.put(R.drawable.gamemode_four_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_four_players));
 		this.map.put(R.drawable.gamemode_three_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_three_players));
