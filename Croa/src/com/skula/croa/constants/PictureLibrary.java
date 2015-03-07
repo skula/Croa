@@ -70,6 +70,7 @@ public class PictureLibrary{
 		this.map.put(R.drawable.gamemode_four_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_four_players));
 		this.map.put(R.drawable.gamemode_three_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_three_players));
 		this.map.put(R.drawable.gamemode_two_players, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_two_players));
+		this.map.put(R.drawable.gamemode_demo, 		BitmapFactory.decodeResource(res, R.drawable.gamemode_demo));
 	
 	}
 		

@@ -31,15 +31,19 @@ public class GameEngine {
 	private List<Integer> playableFrogs;
 
 	public GameEngine(int nPlayers) {
-		this.nPlayers = nPlayers;
+		if(nPlayers==0){
+			this.nPlayers = 4;
+		}else{
+			this.nPlayers = nPlayers;
+		}
 		this.players = new ArrayList<Player>();
 		this.pToken = 0;
 		this.selFrog = null;
 		clearSrcPosition();
 		clearDestPosition();
 
-		//positionTiles();
-		testMock();
+		positionTiles(nPlayers==0?true:false);
+		//testMock();
 		positionFrogs();
 
 		cPlayer = getPlayer(pToken);
@@ -454,7 +458,7 @@ public class GameEngine {
 		}
 	}
 
-	private void positionTiles() {
+	private void positionTiles(boolean demo) {
 		List<Tile> tmp = Tile.getAllTiles();
 		Collections.shuffle(tmp);
 
@@ -463,6 +467,9 @@ public class GameEngine {
 		for (int i = 0; i < Cnst.ROWS_COUNT; i++) {
 			for (int j = 0; j < Cnst.COLUMNS_COUNT; j++) {
 				tiles[j][i] = tmp.remove(0);
+				if(demo){
+					tiles[j][i].setHidden(false);
+				}
 			}
 		}
 	}

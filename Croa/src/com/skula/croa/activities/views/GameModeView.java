@@ -16,7 +16,7 @@ import com.skula.croa.constants.PictureLibrary;
 
 public class GameModeView extends View {
 	private static final int X0 = 800;
-	private static final int Y0 = 400;
+	private static final int Y0 = 350;
 	private static final int DY = 90;
 	
 	private PictureLibrary lib;
@@ -57,6 +57,11 @@ public class GameModeView extends View {
 		
 		Rect r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
 		if(r.contains(x,y)){
+			return 0;
+		}
+		yCount += DY;
+		r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
+		if(r.contains(x,y)){
 			return 2;
 		}
 		yCount += DY;
@@ -64,6 +69,7 @@ public class GameModeView extends View {
 		if(r.contains(x,y)){
 			return 3;
 		}
+
 		yCount += DY;
 		r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
 		if(r.contains(x,y)){
@@ -89,6 +95,11 @@ public class GameModeView extends View {
 		Rect r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
 
 		paint.setColor(Color.RED);
+		canvas.drawBitmap(lib.get(R.drawable.gamemode_demo), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
+				Cnst.GAME_MODE_HEIGHT), r, paint);
+		
+		yCount += DY;
+		r = new Rect(xCount, yCount, xCount + Cnst.GAME_MODE_WIDTH, yCount + Cnst.GAME_MODE_HEIGHT);
 		canvas.drawBitmap(lib.get(R.drawable.gamemode_two_players), new Rect(0, 0, Cnst.GAME_MODE_WIDTH,
 						Cnst.GAME_MODE_HEIGHT), r, paint);
 		yCount += DY;
